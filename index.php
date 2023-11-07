@@ -1,3 +1,3 @@
 <?php 
-    require_once("./controller/LoginController.php");
+    require_once("./controller/HomeController.php");
 ?>

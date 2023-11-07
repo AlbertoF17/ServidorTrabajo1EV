@@ -9,7 +9,7 @@ try {
     $user = "root";
     $pass = "root";
 
-    $bd = "social_network";
+    $bd = "online_shop";
 
     $pdo = connection($host, $user, $pass, $bd);
 
