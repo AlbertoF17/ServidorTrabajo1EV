@@ -1,3 +1,12 @@
+function toggleSubmenu(item) {
+    var submenu = item.querySelector('.submenu');
+    if (submenu.classList.contains('active')) {
+        submenu.classList.remove('active');
+    } else {
+        submenu.classList.add('active');
+    }
+}
+
 function toggleNav() {
     var sidenavWidth = document.getElementById("mySidenav").style.width;
     if (sidenavWidth > "0px") {
@@ -6,12 +15,6 @@ function toggleNav() {
         openNav();
     }
 }
-
-let hamburger = document.getElementById("hamburger");
-
-hamburger.addEventListener("click", function(){
-    toggleNav();
-})
 
 function openNav() {
     document.getElementById("mySidenav").style.width = "20vw";

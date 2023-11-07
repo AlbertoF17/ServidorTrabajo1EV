@@ -12,15 +12,15 @@
 <body>
     <div id="mySidenav" class="sidenav">
         <ul>
-            <li>Productos
-                <ul>
+            <li class="menu-item">Productos
+                <ul class="submenu">
                     <li>Componentes</li>
                     <li>Periféricos</li>
                     <li>Teclas</li>
                 </ul>
             </li>
-            <li>Servicios
-                <ul>
+            <li class="menu-item">Servicios
+                <ul class="submenu">
                     <li>Diseñar una web</li>
                     <li>Comprobar y mejorar tu rendimiento</li>
                     <li>Instalar drivers y programas</li>
@@ -29,12 +29,12 @@
                     <li>Mantenimiento de tu web</li>
                 </ul>
             </li>
-            <li>Sobre Nosotros</li>
+            <li class="menu-item">Sobre Nosotros</li>
         </ul>
     </div>
 
     <div id="main">
-        <span id="hamburger">&#9776;</span>
+        <span id="hamburger" onclick="toggleNav()">&#9776;</span>
     </div>
 </body>
 </html>
