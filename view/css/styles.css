@@ -1,59 +1,224 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Lato", sans-serif;
+    background-color: #121212;
+    color: white;
+}
+
+/* Fixed sidenav, full height */
 .sidenav {
+    list-style: none;
     height: 100%;
-    width: 0;
+    width: 20vw;
     position: fixed;
-    z-index: 1;
+    z-index: +1;
     top: 0;
     left: 0;
-    background-color: #111;
+    background-color: #000011;
     overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
-    color: white;
-    overflow-x: hidden;
-    overflow-y: auto;
+    padding-top: 4rem;
+    padding-left: 0;
+    transition: all 0.3s;
 }
 
-.sidenav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.sidenav li {
-    padding: 8px 8px 8px 32px;
+/* Style the sidenav links and the dropdown button */
+.sidenav a,
+.dropdown-btn {
+    padding: 0.25rem 1rem 0.25rem 1rem;
     text-decoration: none;
-    font-size: 25px;
+    font-size: 1.25rem;
     color: #818181;
     display: block;
-    transition: 0.3s;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
     cursor: pointer;
+    outline: none;
+    user-select: none;
 }
 
-.sidenav ul ul {
+/* On mouse-over */
+.sidenav a:hover,
+.dropdown-btn:hover {
+    color: #f1f1f1;
+}
+
+/* Main content */
+main {
+    margin-left: 20vw;
+    font-size: 1.25rem;
+    padding-left: .25rem;
+    text-align: center;
+}
+
+/* Add an active class to the active dropdown button */
+button.active {
+    background-color: #000036;
+    color: white;
+}
+
+/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+.dropdown-container {
+    list-style: none;
     display: none;
-    padding-left: 32px;
+    background-color: #191942;
+    padding-left: 0.25rem;
 }
 
-.sidenav ul ul li {
-    font-size: 20px;
+/* Optional: Style the caret down icon */
+.fa-caret-down {
+    float: right;
+    padding-right: 1rem;
 }
 
-.sidenav .closebtn {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
+/* Some media queries for responsiveness */
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+
+    .sidenav a {
+        font-size: 18px;
+    }
 }
 
-#main {
-    transition: margin-left 0.5s;
-    padding: 16px;
+.bx {
+    filter: invert(1);
+    opacity: 0.4;
+    height: 1.5rem;
 }
 
-#hamburger {
-    font-size: 2rem;
-    font-weight: bold;
+.dropdown-btn:hover .bx {
+    opacity: 1;
+}
+
+.menu-icon {
+    margin-top: 1rem;
+    padding-left: 1rem;
+    margin-bottom: 2rem;
+    position: relative;
     cursor: pointer;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 2rem;
+    width: 20vw;
+    z-index: +2;
+}
+
+.menu-icon:hover span,
+.menu-icon:hover span:after,
+.menu-icon:hover span:before{
+    opacity: 1;
+    transition: all 0.3s;
+}
+
+
+.menu-icon.active {
+    opacity: 0.85;
+}
+
+.menu-icon.active:hover {
+    opacity: 1;
+}
+
+.menu-icon span,
+.menu-icon span:before,
+.menu-icon span:after {
+    display: block;
+    position: absolute;
+    width: 2.3rem;
+    height: 0.3rem;
+    border-radius: 0.25rem;
+    background-color: white;
+    content: '';
+    transition: all 0.3s;
+}
+
+.menu-icon span{
+    opacity: 0.4;
+}
+
+.menu-icon span:before {
+    left: 0;
+    top: -0.7rem;
+}
+
+.menu-icon span:after {
+    left: 0;
+    top: 0.7rem;
+}
+
+.menu-icon.active span {
+    background-color: transparent;
+}
+
+.menu-icon.active span:after,
+.menu-icon.active span:before {
+    top: 0;
+    background: #FFF;
+}
+
+.menu-icon.active span:before {
+    transform: rotate(135deg);
+}
+
+.menu-icon.active span:after {
+    transform: rotate(-135deg);
+}
+
+/* Estilos para el sidebar retráctil */
+.hamburger.retract {
+    opacity: 0.4;
+}
+
+.hamburger.retract:hover {
+    opacity: 1;
+}
+
+.sidenav.retract {
+    transform: translate(-20vw);
+    transition: all 0.3s;
+    /* Ancho reducido */
+}
+
+.sidenav.retract .bx {
+    display: none;
+    /* Oculta el ícono cuando el sidebar está retraído */
+}
+
+.sidenav.retract .dropdown-container {
+    display: none;
+    /* Oculta el contenido del dropdown cuando el sidebar está retraído */
+}
+
+main.retract {
+    margin-left: 0vw;
+    /* Ajusta el margen izquierdo cuando el sidebar está retraído */
+}
+
+main {
+    transition: margin-left 0.3s;
+    /* Añade una transición para animar el cambio de margen izquierdo */
+}
+
+.shopName {
+    margin-top: -4rem;
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.carousel {
+    text-align: center;
+}
+
+.dropdown-divider {
+    background-color: rgba(211, 211, 211, 0.4);
+    padding: 0;
+    margin-left: -1rem;
+    height: 0.1rem;
 }

@@ -1,6 +1,6 @@
 <?php
-require_once("../connection/connection.php");
+require_once(__DIR__."/../connection/connection.php");
 
 
-require_once("../view/home.php");
+require_once(__DIR__."/../view/home.php");
 ?>

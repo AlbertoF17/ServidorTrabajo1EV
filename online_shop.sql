@@ -48,7 +48,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Tabla `online_shop`.`roles`
+-- Table `online_shop`.`roles`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `online_shop`.`roles` ;
 
@@ -67,12 +67,12 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Tabla `online_shop`.`type`
+-- Table `online_shop`.`types`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `online_shop`.`type` ;
+DROP TABLE IF EXISTS `online_shop`.`types` ;
 
-CREATE TABLE IF NOT EXISTS `online_shop`.`type` (
-  `id` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `online_shop`.`types` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `type` VARCHAR(60) NOT NULL,
   PRIMARY KEY (`id`)
   )
@@ -82,12 +82,12 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Tabla `online_shop`.`categories`
+-- Table `online_shop`.`categories`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `online_shop`.`categories` ;
 
 CREATE TABLE IF NOT EXISTS `online_shop`.`categories` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `type_id` INT NOT NULL,
   `category_name` VARCHAR(60) NOT NULL,
   PRIMARY KEY (`id`),
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `online_shop`.`categories` (
     ON UPDATE NO ACTION,
 CONSTRAINT `fk_type_typeid`
     FOREIGN KEY (`type_id`)
-    REFERENCES `online_shop`.`type` (`id`)
+    REFERENCES `online_shop`.`types` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -112,12 +112,12 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Tabla `online_shop`.`products`
+-- Table `online_shop`.`products`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `online_shop`.`products` ;
 
 CREATE TABLE IF NOT EXISTS `online_shop`.`products` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `category_id` INT NOT NULL,
   `name` VARCHAR(60) NOT NULL,
   `price` DECIMAL NOT NULL,
@@ -135,12 +135,12 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Tabla `online_shop`.`services`
+-- Table `online_shop`.`services`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `online_shop`.`services` ;
 
 CREATE TABLE IF NOT EXISTS `online_shop`.`services` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `category_id` INT NOT NULL,
   `name` VARCHAR(60) NOT NULL,
   `price` DECIMAL NOT NULL,
@@ -156,6 +156,74 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
+-- -----------------------------------------------------
+-- Table `online_shop`.`shopping_carts`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `online_shop`.`shopping_carts` ;
+
+CREATE TABLE IF NOT EXISTS `online_shop`.`shopping_carts` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_user_cart`
+	FOREIGN KEY (`user_id`)
+    REFERENCES `online_shop`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `online_shop`.`products_in_cart`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `online_shop`.`products_in_cart` ;
+
+CREATE TABLE IF NOT EXISTS `online_shop`.`products_in_cart` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `cart_id` INT NOT NULL,
+  `type_id` INT NOT NULL,
+  `product_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_owner_cart`
+	FOREIGN KEY (`cart_id`)
+    REFERENCES `online_shop`.`shopping_carts` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+CONSTRAINT `fk_type_cart`
+	FOREIGN KEY (`type_id`)
+    REFERENCES `online_shop`.`types` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_product_cart`
+	FOREIGN KEY (`product_id`)
+    REFERENCES `online_shop`.`products` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `online_shop`.`purchases`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `online_shop`.`purchases` ;
+
+CREATE TABLE IF NOT EXISTS `online_shop`.`purchases` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `cart_id` INT NOT NULL,
+  `date` DATE NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_cart_purchased`
+	FOREIGN KEY (`cart_id`)
+    REFERENCES `online_shop`.`shopping_carts` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
