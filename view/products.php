@@ -1,5 +1,6 @@
 <?php
-require_once(__DIR__."/../connection/connection.php");
+require_once("../connection/connection.php");
+require_once("../controller/ProductsController.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -60,12 +61,83 @@ require_once(__DIR__."/../connection/connection.php");
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">todos  losdasf</div>
-                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">comp</div>
-                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">periperi</div>
-                <div class="tab-pane fade" id="nav-disabled" role="tabpanel" aria-labelledby="nav-disabled-tab" tabindex="0">teclitas wapitas</div>
+                <div class="tab-pane fade show active p-4" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+                <ul class="list-unstyled list-group list-group-horizontal d-flex flex-wrap">
+                <?php if(!empty($allProducts)){
+                    foreach ($allProducts as $product):?>
+                    <li class="product list-item w-50">
+                        <div class="container d-flex flex-column align-items-center pb-3">
+                            <?php
+                                $imageData = base64_encode($product->image);
+                            ?>
+                            <img src="data:image/jpeg;base64,<?php echo $imageData; ?>" alt="Product Image" class="w-50">
+                            <p><?php echo $product->name; ?></p>
+                            <p><?php echo $product->price."€"; ?></p>
+                        </div>
+                    </li>
+                <?php endforeach; 
+                } ?>
+                </ul>
+                </div>
+                <div class="tab-pane fade p-4" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+                    <ul class="list-unstyled list-inline">
+                    <?php if(!empty($components)){
+                        foreach ($components as $product):?>
+                        <li class="product">
+                            <div class="container w-50 d-flex flex-column justify-content-center align-items-center">
+                                <?php
+                                    $imageData = base64_encode($product->image);
+                                ?>
+                                <img src="data:image/jpeg;base64,<?php echo $imageData; ?>" alt="Product Image" class="w-50">
+                                <p><?php echo $product->name; ?></p>
+                                <p><?php echo $product->price."€"; ?></p>
+                            </div>
+                        </li>
+                    <?php endforeach; 
+                    } ?>
+                </ul>
+                </div>
+                <div class="tab-pane fade p-4" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+                    <ul class="list-unstyled">
+                    <?php if(!empty($peripherals)){
+                        foreach ($peripherals as $product):?>
+                        <li class="product">
+                            <div class="container w-50 d-flex flex-column justify-content-center align-items-center">
+                                <?php
+                                    $imageData = base64_encode($product->image);
+                                ?>
+                                <img src="data:image/jpeg;base64,<?php echo $imageData; ?>" alt="Product Image" class="w-50">
+                                <p><?php echo $product->name; ?></p>
+                                <p><?php echo $product->price."€"; ?></p>
+                            </div>
+                        </li>
+                    <?php endforeach; 
+                    } ?>
+                    </ul>
+                </div>
+                <div class="tab-pane fade p-4" id="nav-disabled" role="tabpanel" aria-labelledby="nav-disabled-tab" tabindex="0">
+                    <ul class="list-unstyled">
+                    <?php if(!empty($keys)){
+                        foreach ($keys as $product):?>
+                        <li class="product">
+                            <div class="container w-50 d-flex flex-column justify-content-center align-items-center">
+                                <?php
+                                    $imageData = base64_encode($product->image);
+                                ?>
+                                <img src="data:image/jpeg;base64,<?php echo $imageData; ?>" alt="Product Image" class="w-50">
+                                <p><?php echo $product->name; ?></p>
+                                <p><?php echo $product->price."€"; ?></p>
+                            </div>
+                        </li>
+                    <?php endforeach; 
+                    } ?>
+                    </ul>
+                </div>
             </div>
         </div>
+        <a href="newProduct.php">
+            <button class="add-button">+</button>
+        </a>
     </main>
 </body>
 </html>

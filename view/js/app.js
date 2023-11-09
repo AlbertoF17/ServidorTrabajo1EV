@@ -23,3 +23,12 @@ hamburguer.addEventListener('click', function () {
     mainContent.classList.toggle('retract');
     hamburguer.classList.toggle("active");
 });
+
+function validateForm() {
+    var checkBox = document.getElementById("registerCheck");
+    if (!checkBox.checked) {
+        alert("You must agree to the terms to register.");
+        return false;
+    }
+    return true;
+}

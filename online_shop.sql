@@ -55,12 +55,8 @@ DROP TABLE IF EXISTS `online_shop`.`roles` ;
 CREATE TABLE IF NOT EXISTS `online_shop`.`roles` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `role` VARCHAR(60) NOT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `fk_roles_users`
-    FOREIGN KEY (`id`)
-    REFERENCES `online_shop`.`users` (`role_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`id`)
+  )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -91,16 +87,6 @@ CREATE TABLE IF NOT EXISTS `online_shop`.`categories` (
   `type_id` INT NOT NULL,
   `category_name` VARCHAR(60) NOT NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `fk_id_products`
-    FOREIGN KEY (`id`)
-    REFERENCES `online_shop`.`products` (`category_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_id_services`
-    FOREIGN KEY (`id`)
-    REFERENCES `online_shop`.`services` (`category_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
 CONSTRAINT `fk_type_typeid`
     FOREIGN KEY (`type_id`)
     REFERENCES `online_shop`.`types` (`id`)
@@ -118,14 +104,14 @@ DROP TABLE IF EXISTS `online_shop`.`products` ;
 
 CREATE TABLE IF NOT EXISTS `online_shop`.`products` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `category_id` INT NOT NULL,
+  `categoryId` INT NOT NULL,
   `name` VARCHAR(60) NOT NULL,
-  `price` DECIMAL NOT NULL,
+  `price` FLOAT NOT NULL,
   `description` LONGTEXT NOT NULL,
-  `picture` BLOB NOT NULL,
+  `image` LONGBLOB NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_category_products`
-	FOREIGN KEY (`category_id`)
+	FOREIGN KEY (`categoryId`)
     REFERENCES `online_shop`.`categories` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -141,14 +127,14 @@ DROP TABLE IF EXISTS `online_shop`.`services` ;
 
 CREATE TABLE IF NOT EXISTS `online_shop`.`services` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `category_id` INT NOT NULL,
+  `categoryId` INT NOT NULL,
   `name` VARCHAR(60) NOT NULL,
-  `price` DECIMAL NOT NULL,
+  `price` FLOAT NOT NULL,
   `description` LONGTEXT NOT NULL,
-  `picture` BLOB NOT NULL,
+  `image` LONGBLOB NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_category_services`
-	FOREIGN KEY (`category_id`)
+	FOREIGN KEY (`categoryId`)
     REFERENCES `online_shop`.`categories` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)

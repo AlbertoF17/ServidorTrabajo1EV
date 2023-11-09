@@ -45,6 +45,9 @@ require_once(__DIR__."/../connection/connection.php");
             </ul>
             <li><a href="#aboutUs">About Us</a></li>
         </ul>
+        <div>
+            <a href="../view/login.php" class="btn btn-primary corner-btn">Sign In / Log In</a>
+        </div>
     </header>
     <main class="retract">
         <div class="shopName">
