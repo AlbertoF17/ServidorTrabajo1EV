@@ -229,6 +229,16 @@ main {
     right: 2rem;
 }
 
+.corner-dropdown {
+    position: absolute;
+    top: -3.9rem;
+    right: 2rem;
+}
+
+.corner-dropdown img {
+    width: 1.75rem;
+}
+
 .add-button {
     position: fixed;
     bottom: 2rem;

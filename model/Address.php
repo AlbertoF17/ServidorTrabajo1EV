@@ -16,14 +16,6 @@ class Address {
         $this->country = $country;
         $this->postalCode = $postalCode;
     }
-
-    public function __get($atributo) {
-        if($atributo != "password"){
-            return $this->$atributo;
-        } else {
-            echo `No puedes obtener el atributo {$atributo}`;
-        }
-    }
 }
 
 ?>

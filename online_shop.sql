@@ -22,21 +22,21 @@ DROP TABLE IF EXISTS `online_shop`.`users` ;
 
 CREATE TABLE IF NOT EXISTS `online_shop`.`users` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `role_id` INT NOT NULL,
+  `roleId` INT NOT NULL,
   `username` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
-  `phone_number` VARCHAR(45) NOT NULL,
+  `phoneNumber` VARCHAR(45) NOT NULL,
   `password` CHAR(60) NOT NULL,
-  `apartment_number` VARCHAR(20) NOT NULL,
+  `apartmentNumber` VARCHAR(20) NOT NULL,
   `street` VARCHAR(100) NOT NULL,
   `city` VARCHAR(100) NOT NULL,
   `region` VARCHAR(100) NOT NULL,
   `country` VARCHAR(100) NOT NULL,
-  `postal_code` VARCHAR(20) NOT NULL,
-  `create_date` DATE NOT NULL,
+  `postalCode` VARCHAR(20) NOT NULL,
+  `createDate` DATE NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_users_roles`
-    FOREIGN KEY (`role_id`)
+    FOREIGN KEY (`roleId`)
     REFERENCES `online_shop`.`roles` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,

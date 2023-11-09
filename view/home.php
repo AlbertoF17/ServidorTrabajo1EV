@@ -1,5 +1,6 @@
 <?php
 require_once(__DIR__."/../connection/connection.php");
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,9 +46,19 @@ require_once(__DIR__."/../connection/connection.php");
             </ul>
             <li><a href="#aboutUs">About Us</a></li>
         </ul>
-        <div>
-            <a href="../view/login.php" class="btn btn-primary corner-btn">Sign In / Log In</a>
-        </div>
+        <?php if(isset($_SESSION["usuario"])) : ?>
+            <div class="dropdown d-flex justify-content-end">
+                <button class="btn btn-light dropdown-toggle corner-dropdown" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="../media/user.png" alt="User image"/>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="#">Edit Profile</a></li>
+                    <li><a class="dropdown-item" href="../controller/LogoutController.php">Logout</a></li>
+                </ul>
+            </div>
+        <?php else : ?>
+            <button class="btn btn-primary corner-btn"><a href="../view/login.php" class="btn btn-primary">Log In / Sign In</a></button>
+        <?php endif;?>
     </header>
     <main class="retract">
         <div class="shopName">

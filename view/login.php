@@ -1,3 +1,8 @@
+<?php
+require_once("../connection/connection.php");
+session_start();
+$_SESSION = array();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,61 +62,61 @@
         </ul>
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="pills-login-tab" tabindex="0">
-                <form action="../controller/SessionController.php" method="POST" class="container w-75">
+                <form action="../controller/LoginController.php" method="POST" class="container w-75">
                     <div class="form-outline mb-4">
                         <label class="form-label" for="email">Email</label>
-                        <input type="email" id="email" class="form-control" />
+                        <input type="email" id="email" class="form-control" name="email"/>
                     </div>
                     <div class="form-outline mb-4">
                         <label class="form-label" for="username">Username</label>
-                        <input type="text" id="username" class="form-control" />
+                        <input type="text" id="username" class="form-control" name="username"/>
                     </div>
                     <div class="form-outline mb-4">
                         <label class="form-label" for="password">Password</label>
-                        <input type="password" id="password" class="form-control" />
+                        <input type="password" id="password" class="form-control" name="password"/>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block mb-4 px-5" name="loginSubmit">Log in</button>
+                    <button type="submit" class="btn btn-primary btn-block mb-4 px-5" name="submit">Log in</button>
                 </form>
             </div>
             <div class="tab-pane fade" id="pills-signin" role="tabpanel" aria-labelledby="pills-signin-tab" tabindex="0">
-                <form action="../controller/SessionController.php" method="POST" class="container w-75">
+                <form action="../controller/RegisterController.php" method="POST" class="container w-75">
                     <div class="form-outline mb-4">
                     <label class="form-label" for="username">Username</label>
-                        <input type="text" id="username" class="form-control" />
+                        <input type="text" id="username" class="form-control" name="username"/>
                     </div>
                     <div class="form-outline mb-4">
                         <label class="form-label" for="email">Email</label>
-                        <input type="email" id="email" class="form-control" />
+                        <input type="email" id="email" class="form-control" name="email"/>
                     </div>
                     <div class="form-outline mb-4">
                         <div class="row g-3">
                             <div class="col">
                                 <label class="form-label" for="password">Password</label>
-                                <input type="password" id="password" class="form-control" />
+                                <input type="password" id="password" class="form-control" name="password"/>
                             </div>
                             <div class="col">
                                 <label class="form-label" for="repeatPassword">Repeat password</label>
-                                <input type="password" id="repeatPassword" class="form-control" />
+                                <input type="password" id="repeatPassword" class="form-control" name="repeatPassword"/>
                             </div>
                         </div>
                     </div>
                     <div class="form-outline mb-4">
                         <label class="form-label" for="phoneNumber">Phone Number</label>
-                        <input type="tel" id="phoneNumber" class="form-control" />
+                        <input type="tel" id="phoneNumber" class="form-control" name="phoneNumber"/>
                     </div>
                     <div class="form-outline mb-4">
                         <div class="row g-3">
                             <div class="col">
                                 <label class="form-label" for="street">Street</label>
-                                <input type="text" id="street" class="form-control" />
+                                <input type="text" id="street" class="form-control" name="street"/>
                             </div>
                             <div class="col">
                                 <label class="form-label" for="streetNumber">Street Number</label>
-                                <input type="number" id="streetNumber" class="form-control" />
+                                <input type="text" id="streetNumber" class="form-control" name="streetNumber">
                             </div>
                             <div class="col">
                                 <label class="form-label" for="apartmentNumber">Apartment Number</label>
-                                <input type="number" id="apartmentNumber" class="form-control" />
+                                <input type="text" id="apartmentNumber" class="form-control" name="apartmentNumber"/>
                             </div>
                         </div>
                     </div>
@@ -119,19 +124,19 @@
                         <div class="row g-3">
                             <div class="col">
                                 <label class="form-label" for="city">City</label>
-                                <input type="text" id="city" class="form-control" />
+                                <input type="text" id="city" class="form-control" name="city"/>
                             </div>
                             <div class="col">
                                 <label class="form-label" for="region">Region</label>
-                                <input type="text" id="region" class="form-control" />
+                                <input type="text" id="region" class="form-control" name="region"/>
                             </div>
                             <div class="col">
                                 <label class="form-label" for="country">Country</label>
-                                <input type="text" id="country" class="form-control" />
+                                <input type="text" id="country" class="form-control" name="country"/>
                             </div>
                             <div class="col">
                                 <label class="form-label" for="postalCode">Postal Code</label>
-                                <input type="number" id="postalCode" class="form-control" />
+                                <input type="text" id="postalCode" class="form-control" name="postalCode"/>
                             </div>
                         </div>
                     </div>
@@ -140,7 +145,7 @@
                         aria-describedby="registerCheckHelpText" />
                         <label class="form-check-label" for="registerCheck">I have read and agree to the terms</label>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block mb-3 px-5" name="signinSubmit">Sign in</button>
+                    <button type="submit" class="btn btn-primary btn-block mb-3 px-5" name="submit">Sign in</button>
                 </form>
             </div>
         </div>
