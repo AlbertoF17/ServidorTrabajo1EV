@@ -52,12 +52,12 @@ session_start();
                     <img src="../media/user.png" alt="User image"/>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <li><a class="dropdown-item" href="#">Edit Profile</a></li>
+                    <li><a class="dropdown-item" href="../view/profile.php">Edit Profile</a></li>
                     <li><a class="dropdown-item" href="../controller/LogoutController.php">Logout</a></li>
                 </ul>
             </div>
         <?php else : ?>
-            <button class="btn btn-primary corner-btn"><a href="../view/login.php" class="btn btn-primary">Log In / Sign In</a></button>
+            <a href="../view/login.php" class="btn btn-primary corner-btn">Log In / Sign In</a>
         <?php endif;?>
     </header>
     <main class="retract">
