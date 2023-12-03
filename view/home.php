@@ -1,6 +1,9 @@
 <?php
 require_once(__DIR__."/../connection/connection.php");
+require_once(__DIR__."/../model/User.php");
+require_once(__DIR__."/../model/Address.php");
 session_start();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +16,7 @@ session_start();
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="../view/css/styles.css">
     <script src="../view/js/app.js" defer></script>
-    <title>Document</title>
+    <title>HardwareHub</title>
 </head>
 <body>
     <header>
@@ -21,7 +24,8 @@ session_start();
             <span></span>
         </div>
         <ul class="sidenav retract">
-            <button class="dropdown-btn">Productos 
+            <li><a href="#">Home</a></li>
+            <button class="dropdown-btn">Products 
                 <img class="bx" src="../view/media/arrow-down-icon.png"/>
             </button>
             <ul class="dropdown-container">
@@ -31,14 +35,14 @@ session_start();
                 <li><a href="#">Peripherals</a></li>
                 <li><a href="#">Keys</a></li>
             </ul>
-            <button class="dropdown-btn">Servicios 
+            <button class="dropdown-btn">Services 
                 <img class="bx" src="../view/media/arrow-down-icon.png"/>
             </button>
             <ul class="dropdown-container">
-                <li><a href="#">All Services</a></li>
+                <li><a href="../view/services.php">All Services</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a href="#">Design a website</a></li>
-                <li><a href="#">Check and upgrade your performance</a></li>
+                <li><a href="#">Check and upgrade PC's performance</a></li>
                 <li><a href="#">Install drivers and programs</a></li>
                 <li><a href="#">PC repair</a></li>
                 <li><a href="#">Bug fixes</a></li>
@@ -52,7 +56,7 @@ session_start();
                     <img src="../media/user.png" alt="User image"/>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <li><a class="dropdown-item" href="../view/profile.php">Edit Profile</a></li>
+                    <li><a class="dropdown-item" href="../controller/ProfileController.php">Go to profile</a></li>
                     <li><a class="dropdown-item" href="../controller/LogoutController.php">Logout</a></li>
                 </ul>
             </div>
@@ -62,10 +66,10 @@ session_start();
     </header>
     <main class="retract">
         <div class="shopName">
-            <h1>Nombre de la empresa</h1>
+            <h1>HardwareHub</h1>
         </div>
         <div id="carouselExampleCaptions" class="carousel slide w-100">
-            <h2>Productos recomendados</h2>
+            <h2>Recommeded Prodcuts</h2>
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                 <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -104,7 +108,7 @@ session_start();
             </button>
         </div>
         <div>
-            <p>Puede usar nuestro menú lateral para guiarse a través de nuestra página</p>
+            <p>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</p>
         </div>
     </main>
 </body>

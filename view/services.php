@@ -15,36 +15,50 @@ require_once(__DIR__."/../connection/connection.php");
     <title>Document</title>
 </head>
 <body>
-    <header>
+<header>
         <div class="menu-icon">
             <span></span>
         </div>
         <ul class="sidenav retract">
-            <button class="dropdown-btn">Productos 
+            <li><a href="../view/home.php">Home</a></li>
+            <button class="dropdown-btn">Products 
                 <img class="bx" src="../view/media/arrow-down-icon.png"/>
             </button>
             <ul class="dropdown-container">
-                <li><a href="../view/products.php">Todos los productos</a></li>
+                <li><a href="../view/products.php">All Products</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a href="#">Componentes</a></li>
-                <li><a href="#">Periféricos</a></li>
-                <li><a href="#">Teclas</a></li>
+                <li><a href="#">Components</a></li>
+                <li><a href="#">Peripherals</a></li>
+                <li><a href="#">Keys</a></li>
             </ul>
-            <button class="dropdown-btn">Servicios 
+            <button class="dropdown-btn">Services 
                 <img class="bx" src="../view/media/arrow-down-icon.png"/>
             </button>
             <ul class="dropdown-container">
-                <li><a href="#">Todos los servicios</a></li>
+                <li><a href="#">All Services</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a href="#">Diseñar una web</a></li>
-                <li><a href="#">Comprobar y mejorar tu rendimiento</a></li>
-                <li><a href="#">Instalar drivers y programas</a></li>
-                <li><a href="#">Reparación de pc</a></li>
-                <li><a href="#">Solución de errores</a></li>
-                <li><a href="#">Mantenimiento de tu web</a></li>
+                <li><a href="#">Design a website</a></li>
+                <li><a href="#">Check and upgrade PC's performance</a></li>
+                <li><a href="#">Install drivers and programs</a></li>
+                <li><a href="#">PC repair</a></li>
+                <li><a href="#">Bug fixes</a></li>
+                <li><a href="#">Website maintenance</a></li>
             </ul>
             <li><a href="#aboutUs">About Us</a></li>
         </ul>
+        <?php if(isset($_SESSION["usuario"])) : ?>
+            <div class="dropdown d-flex justify-content-end">
+                <button class="btn btn-light dropdown-toggle corner-dropdown" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="../media/user.png" alt="User image"/>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="../view/profile.php">Go to profile</a></li>
+                    <li><a class="dropdown-item" href="../controller/LogoutController.php">Logout</a></li>
+                </ul>
+            </div>
+        <?php else : ?>
+            <a href="../view/login.php" class="btn btn-primary corner-btn">Log In / Sign In</a>
+        <?php endif;?>
     </header>
     <main class="retract">
         <div class="shopName">
@@ -53,13 +67,13 @@ require_once(__DIR__."/../connection/connection.php");
         <div>
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Todos los servicios</button>
-                    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Diseñar una web</button>
-                    <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Comprobar y mejorar tu rendimiento</button>
-                    <button class="nav-link" id="nav-disabled-tab" data-bs-toggle="tab" data-bs-target="#nav-disabled" type="button" role="tab" aria-controls="nav-disabled" aria-selected="false">Instalar drivers y programas</button>
-                    <button class="nav-link" id="nav-hola-tab" data-bs-toggle="tab" data-bs-target="#nav-hola" type="button" role="tab" aria-controls="nav-hola" aria-selected="false">Reparación de pc</button>
-                    <button class="nav-link" id="nav-adios-tab" data-bs-toggle="tab" data-bs-target="#nav-adios" type="button" role="tab" aria-controls="nav-adios" aria-selected="false">Solución de errores</button>
-                    <button class="nav-link" id="nav-jaja-tab" data-bs-toggle="tab" data-bs-target="#nav-jaja" type="button" role="tab" aria-controls="nav-jaja" aria-selected="false">Mantenimiento de tu web</button>
+                    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">All Services</button>
+                    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Design a website</button>
+                    <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Check and upgrade PC's performanceo</button>
+                    <button class="nav-link" id="nav-disabled-tab" data-bs-toggle="tab" data-bs-target="#nav-disabled" type="button" role="tab" aria-controls="nav-disabled" aria-selected="false">Install drivers and programs</button>
+                    <button class="nav-link" id="nav-hola-tab" data-bs-toggle="tab" data-bs-target="#nav-hola" type="button" role="tab" aria-controls="nav-hola" aria-selected="false">PC repair</button>
+                    <button class="nav-link" id="nav-adios-tab" data-bs-toggle="tab" data-bs-target="#nav-adios" type="button" role="tab" aria-controls="nav-adios" aria-selected="false">Bug fixes</button>
+                    <button class="nav-link" id="nav-jaja-tab" data-bs-toggle="tab" data-bs-target="#nav-jaja" type="button" role="tab" aria-controls="nav-jaja" aria-selected="false">Website maintenance</button>
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">

@@ -26,6 +26,11 @@ class User {
             echo `No puedes obtener el atributo {$atributo}`;
         }
     }
+
+    public function __toString() {
+        $addressString = $this->address->__toString();
+        return "User[id={$this->id}, userName={$this->userName}, email={$this->email}, phoneNumber={$this->phoneNumber}, address={$addressString}, createDate={$this->createDate}]";
+    }
 }
 
 ?>

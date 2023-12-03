@@ -9,13 +9,13 @@ function newProduct($pdo){
         $description = $_POST['description'];
         $image = fopen($_FILES['image']['tmp_name'], 'rb');
 
-        $query = "INSERT INTO products (id, categoryId, name, price, description, image) VALUES (0, :categoryId, :name, :price, :description, :image)";
+        $query = "INSERT INTO products (id, categoryId, name, price, description, image) VALUES (0, (?), (?), (?), (?), (?))";
         $step = $pdo->prepare($query);
-        $step->bindParam(':categoryId', $categoryId, PDO::PARAM_INT);
-        $step->bindParam(':name', $name, PDO::PARAM_STR);
-        $step->bindParam(':price', $price, PDO::PARAM_STR);
-        $step->bindParam(':description', $description, PDO::PARAM_STR);
-        $step->bindParam(':image', $image, PDO::PARAM_LOB);
+        $step->bindParam(1, $categoryId, PDO::PARAM_INT);
+        $step->bindParam(2, $name, PDO::PARAM_STR);
+        $step->bindParam(3, $price, PDO::PARAM_STR);
+        $step->bindParam(4, $description, PDO::PARAM_STR);
+        $step->bindParam(5, $image, PDO::PARAM_LOB);
 
         if ($step->execute()) {
             echo "Data with Photo is added";
@@ -41,10 +41,9 @@ function selectAllProducts($pdo){
 
 function selectProductsByCategory($pdo, $category){
     $results = [];
-    $query = "SELECT * FROM products WHERE categoryId = :category";
+    $query = "SELECT * FROM products WHERE categoryId = (?)";
     $step = $pdo->prepare($query);
-    $step->bindParam(':category', $category, PDO::PARAM_INT);
-    $step->execute();
+    $step->execute([$category]);
     foreach ($step->fetchAll() as $p) {
         $product = new Product($p["id"], $p["categoryId"], $p["name"], $p["price"], $p["description"], $p["image"]);
         array_push($results, $product);

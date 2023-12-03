@@ -13,42 +13,53 @@ require_once("../controller/ProductsController.php");
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="../view/css/styles.css">
     <script src="../view/js/app.js" defer></script>
-    <title>Document</title>
+    <title>HardwareHub</title>
 </head>
 <body>
-    <header>
+<header>
         <div class="menu-icon">
             <span></span>
         </div>
         <ul class="sidenav retract">
-            <button class="dropdown-btn">Productos 
+            <li><a href="../view/home.php">Home</a></li>
+            <button class="dropdown-btn">Products 
                 <img class="bx" src="../view/media/arrow-down-icon.png"/>
             </button>
             <ul class="dropdown-container">
-                <li><a href="#">Todos los productos</a></li>
+                <li><a href="../view/products.php">All Products</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a href="#">Componentes</a></li>
-                <li><a href="#">Periféricos</a></li>
-                <li><a href="#">Teclas</a></li>
+                <li><a href="#">Components</a></li>
+                <li><a href="#">Peripherals</a></li>
+                <li><a href="#">Keys</a></li>
             </ul>
-            <button class="dropdown-btn">Servicios 
+            <button class="dropdown-btn">Services 
                 <img class="bx" src="../view/media/arrow-down-icon.png"/>
             </button>
             <ul class="dropdown-container">
-                <li><a href="../view/services.php">Todos los servicios</a></li>
+                <li><a href="../view/services.php">All Services</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a href="#">Diseñar una web</a></li>
-                <li><a href="#">Comprobar y mejorar tu rendimiento</a></li>
-                <li><a href="#">Instalar drivers y programas</a></li>
-                <li><a href="#">Reparación de pc</a></li>
-                <li><a href="#">Solución de errores</a></li>
-                <li><a href="#">Mantenimiento de tu web</a></li>
+                <li><a href="#">Design a website</a></li>
+                <li><a href="#">Check and upgrade PC's performance</a></li>
+                <li><a href="#">Install drivers and programs</a></li>
+                <li><a href="#">PC repair</a></li>
+                <li><a href="#">Bug fixes</a></li>
+                <li><a href="#">Website maintenance</a></li>
             </ul>
             <li><a href="#aboutUs">About Us</a></li>
         </ul>
-        <div>
-            <a href="../view/products.php" class="btn btn-primary corner-btn">Return to products page</a>
-        </div>
+        <?php if(isset($_SESSION["usuario"])) : ?>
+            <div class="dropdown d-flex justify-content-end">
+                <button class="btn btn-light dropdown-toggle corner-dropdown" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="../media/user.png" alt="User image"/>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="../view/profile.php">Go to profile</a></li>
+                    <li><a class="dropdown-item" href="../controller/LogoutController.php">Logout</a></li>
+                </ul>
+            </div>
+        <?php else : ?>
+            <a href="../view/login.php" class="btn btn-primary corner-btn">Log In / Sign In</a>
+        <?php endif;?>
     </header>
     <main class="retract">
         <h1>New Product</h1>

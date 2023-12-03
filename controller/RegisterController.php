@@ -5,7 +5,7 @@
         $mail = isset($_POST["email"]) ? trim($_POST["email"]) : false;
         $phoneNum = isset($_POST["phoneNumber"]) ? trim($_POST["phoneNumber"]) : false;
         $pass = isset($_POST["password"]) ? $_POST["password"] : false;
-        $apartmentNum = isset($_POST["apartmentNumber"]) ? $_POST["apartmentNumber"] : false;
+        $streetNum = isset($_POST["streetNumber"]) ? $_POST["streetNumber"]: false;
         $street = isset($_POST["street"]) ? $_POST["street"] : false;
         $city = isset($_POST["city"]) ? $_POST["city"] : false;
         $region = isset($_POST["region"]) ? $_POST["region"] : false;
@@ -42,26 +42,20 @@
         }
 
         if ($usernameValidado && $mailValidado && $passValidado) {
-            $_SESSION["errores"] = null;
-            unset($_SESSION["errores"]);
-            $passSegura = password_hash($pass, PASSWORD_BCRYPT, ["cost" => 8]);
-            $stmt = $pdo->prepare("INSERT INTO users (id, roleId, username, email, phoneNumber, password, apartmentNumber, street, city, region, country, postalCode, createDate) VALUES
-            (0, 1, :username, :mail, :phoneNum, :pass, :apartmentNum, :street, :city, :region, :country, :postalCode, CURDATE())");
-            $stmt->bindParam(':username', $username);
-            $stmt->bindParam(':mail', $mail);
-            $stmt->bindParam(':phoneNum', $phoneNum);
-            $stmt->bindParam(':pass', $passSegura);
-            $stmt->bindParam(':apartmentNum', $apartmentNum);
-            $stmt->bindParam(':street', $street);
-            $stmt->bindParam(':city', $city);
-            $stmt->bindParam(':region', $region);
-            $stmt->bindParam(':country', $country);
-            $stmt->bindParam(':postalCode', $postalCode);
-            $guardar = $stmt->execute();
-            if ($guardar) {
-                $_SESSION["completado"] = "Registro completado";
-            } else {
-                $_SESSION["errores"]["general"] = "Fallo en el registro";
+            try {
+                $_SESSION["errores"] = null;
+                unset($_SESSION["errores"]);
+                $passSegura = password_hash($pass, PASSWORD_BCRYPT, ["cost" => 8]);
+                $stmt = $pdo->prepare("INSERT INTO users (id, roleId, username, email, phoneNumber, password, streetNumber, street, city, region, country, postalCode, createDate) VALUES
+                (0, 2, (?), (?), (?), (?), (?), (?), (?), (?), (?), (?), CURDATE())");
+                $guardar = $stmt->execute([$username, $mail, $phoneNum, $passSegura, $streetNum, $street, $city, $region, $country, $postalCode]);
+                if ($guardar) {
+                    $_SESSION["completado"] = "Registro completado";
+                } else {
+                    $_SESSION["errores"]["general"] = "Fallo en el registro";
+                }
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
             }
         } else {
             $_SESSION["errores"] = $arrayErrores;

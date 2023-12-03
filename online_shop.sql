@@ -16,6 +16,24 @@ CREATE SCHEMA IF NOT EXISTS `online_shop` DEFAULT CHARACTER SET utf8mb4 COLLATE 
 USE `online_shop` ;
 
 -- -----------------------------------------------------
+-- Table `online_shop`.`roles`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `online_shop`.`roles` ;
+
+CREATE TABLE IF NOT EXISTS `online_shop`.`roles` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `role` VARCHAR(60) NOT NULL,
+  PRIMARY KEY (`id`)
+  )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+INSERT INTO roles (id, role) VALUES (0, "admin");
+INSERT INTO roles (id, role) VALUES (0, "user");
+
+
+-- -----------------------------------------------------
 -- Table `online_shop`.`users`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `online_shop`.`users` ;
@@ -27,10 +45,10 @@ CREATE TABLE IF NOT EXISTS `online_shop`.`users` (
   `email` VARCHAR(45) NOT NULL,
   `phoneNumber` VARCHAR(45) NOT NULL,
   `password` CHAR(60) NOT NULL,
-  `apartmentNumber` VARCHAR(20) NOT NULL,
+  `streetNumber` VARCHAR(20),
   `street` VARCHAR(100) NOT NULL,
   `city` VARCHAR(100) NOT NULL,
-  `region` VARCHAR(100) NOT NULL,
+  `region` VARCHAR(100),
   `country` VARCHAR(100) NOT NULL,
   `postalCode` VARCHAR(20) NOT NULL,
   `createDate` DATE NOT NULL,
@@ -42,21 +60,6 @@ CREATE TABLE IF NOT EXISTS `online_shop`.`users` (
     ON UPDATE NO ACTION,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) INVISIBLE,
   UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
--- Table `online_shop`.`roles`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `online_shop`.`roles` ;
-
-CREATE TABLE IF NOT EXISTS `online_shop`.`roles` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `role` VARCHAR(60) NOT NULL,
-  PRIMARY KEY (`id`)
-  )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -75,6 +78,9 @@ CREATE TABLE IF NOT EXISTS `online_shop`.`types` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
+
+INSERT INTO types VALUES (0, "Prodcuts");
+INSERT INTO types VALUES (0, "Services");
 
 
 -- -----------------------------------------------------
@@ -96,6 +102,15 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
+INSERT INTO categories VALUES (0, 1,"Components");
+INSERT INTO categories VALUES (0, 1,"Peripherals");
+INSERT INTO categories VALUES (0, 1,"Keys");
+INSERT INTO categories VALUES (0, 2,"Design a website");
+INSERT INTO categories VALUES (0, 2,"Check and upgrade PC's preformance");
+INSERT INTO categories VALUES (0, 2,"Install drivers and programs");
+INSERT INTO categories VALUES (0, 2,"PC repair");
+INSERT INTO categories VALUES (0, 2,"Bug fixes");
+INSERT INTO categories VALUES (0, 2,"Website maintenance");
 
 -- -----------------------------------------------------
 -- Table `online_shop`.`products`

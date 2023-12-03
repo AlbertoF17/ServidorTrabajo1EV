@@ -8,10 +8,9 @@
         $email = isset($_POST["email"]) ? trim($_POST["email"]) : false;
         $pass = isset($_POST["password"]) ? $_POST["password"] : false;
 
-        $sql = "SELECT * FROM users WHERE email = :email";
+        $sql = "SELECT * FROM users WHERE email = (?)";
         $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':email', $email);
-        $stmt->execute();
+        $stmt->execute([$email]);
         $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($usuario) {
@@ -23,7 +22,6 @@
                 $_SESSION["usuario"] = $user;
                 $_SESSION["completado"] = "Login completado";
                 header("Location: ../view/home.php");
-                session_start();
                 exit;
             } else {
                 $_SESSION["errores"] = "Contraseña incorrecta";

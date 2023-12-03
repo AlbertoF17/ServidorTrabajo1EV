@@ -2,75 +2,74 @@
 require_once("../connection/connection.php");
 require_once("../model/User.php");
 require_once("../controller/UserController.php");
-require_once("../controller/TweetsController.php");
-require_once("../model/UsersIMP.php");
-session_start();
+require_once("../model/UserIMP.php");
 ?>
 
 <!DOCTYPE html>
 <html>
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="../view/css/styles.css">
     <title>Perfil</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link href="CSS/styles.css" rel="stylesheet">
 </head>
 
 <body>
-    <h1>Perfil de <?php echo $userObject->__get("userName"); ?></h1>
-    <p>Seguidores: <?php echo $followers.$tabulacion ?> Seguidos: <?php echo $following; ?></p>
-    <p>Correo electrónico: <?php echo $userObject->__get("email"); ?></p>
-    <p>Usuario desde: <?php echo $userObject->__get("createDate"); ?></p>
-    <?php if ($isLogged): ?>
-        <p>Descripción: <?php echo $userObject->__get("description"); ?></p>
-        <a href="description.php">Editar descripción</a>
-    <?php endif; ?>
-        
-    <?php if (!$isLogged): ?> 
-        <?php if ($followButtons): ?> 
-           <a href="../controller/UnfollowController.php?id=<?php echo $userObject->__get("id"); ?>">Dejar de seguir</a>
-        <?php else : ?>
-            <a href="../controller/FollowController.php?id=<?php echo $userObject->__get("id"); ?>">Seguir</a>
-        <?php endif; ?>
-    <?php endif; ?>
-    <?php echo $tabulacion; ?>
-    <a href="home.php">Volver a la página principal</a>
-    <div class="nuevo">
-        <h2>Nuevo Tweet</h2>
-            <form action="../controller/TweetsController.php" method="POST">
-                <textarea name="tweet" class="textareaPerfil"></textarea>
-                <p><input type="submit" value="Publicar" class="btn btn-primary"></p>
-            </form>
-    </div>
-    <?php if (count($userTweets) === 0): ?>
-        <?php if ($isLogged): ?> 
-            <p>¡¡¡Es el momento de publicar tu primer tuit!!!</p>
-        <?php else : ?>
-            <p>El usuario no ha publicado ningún tuit por el momento.</p>
-        <?php endif; ?>
-    <?php else: ?>
-    <h2>Tweets</h2>
-        <ul class="tuitPerfil">
-            <?php foreach ($userTweets as $tweet): ?>
-                <li class="perfil">
-                    <div>
-                        <b><a href="profile.php?id=<?php echo $tweet->user->id; ?>">
-                            <?php echo $tweet->user->userName;?></a></b><b class="doubleDots">:</b>
-                        <?php echo $tweet->text; ?>
-                    </div>
-                    <div>
-                        <p class="fecha"><?php echo $tweet->createDate; ?></p>
-                        <?php if ($tweet->user->id === $_SESSION["usuario"]->id): ?>
-                            <form action="../controller/TweetsController.php" method="POST" class="botonEliminar">
-                                <input type="hidden" name="tweet_id" value="<?php echo $tweet->id; ?>">
-                                <input type="submit" value="Eliminar" class="btn btn-danger">
-                            </form>
-                        <?php endif; ?>
-                    </div>
-                </li>
-            <?php endforeach; ?>
+<header>
+        <div class="menu-icon">
+            <span></span>
+        </div>
+        <ul class="sidenav retract">
+            <li><a href="../view/home.php">Home</a></li>
+            <button class="dropdown-btn">Products 
+                <img class="bx" src="../view/media/arrow-down-icon.png"/>
+            </button>
+            <ul class="dropdown-container">
+                <li><a href="../view/products.php">All Products</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a href="#">Components</a></li>
+                <li><a href="#">Peripherals</a></li>
+                <li><a href="#">Keys</a></li>
+            </ul>
+            <button class="dropdown-btn">Services 
+                <img class="bx" src="../view/media/arrow-down-icon.png"/>
+            </button>
+            <ul class="dropdown-container">
+                <li><a href="../view/services.php">All Services</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a href="#">Design a website</a></li>
+                <li><a href="#">Check and upgrade PC's performance</a></li>
+                <li><a href="#">Install drivers and programs</a></li>
+                <li><a href="#">PC repair</a></li>
+                <li><a href="#">Bug fixes</a></li>
+                <li><a href="#">Website maintenance</a></li>
+            </ul>
+            <li><a href="#aboutUs">About Us</a></li>
         </ul>
-    <?php endif; ?>
+        <?php if(isset($_SESSION["usuario"])) : ?>
+            <div class="dropdown d-flex justify-content-end">
+                <button class="btn btn-light dropdown-toggle corner-dropdown" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="../media/user.png" alt="User image"/>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="../controller/LogoutController.php">Logout</a></li>
+                </ul>
+            </div>
+        <?php else : ?>
+            <a href="../view/login.php" class="btn btn-primary corner-btn">Log In / Sign In</a>
+        <?php endif;?>
+    </header>
+    <main class="retract">
+        <div><h1><?php echo $userObject->__get("userName"); ?>'s Profile</h1>
+        <p>Email: <?php echo $userObject->__get("email"); ?></p>
+        <p>User since: <?php echo $userObject->__get("createDate"); ?></p></div>
+        <a href="home.php">Return to Main Page</a>
+    </main>
 
 </body>
 

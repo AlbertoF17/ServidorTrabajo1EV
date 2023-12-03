@@ -9,13 +9,13 @@ function newService($pdo){
         $description = $_POST['description'];
         $image = fopen($_FILES['image']['tmp_name'], 'rb');
 
-        $query = "INSERT INTO services (id, categoryId, name, price, description, image) VALUES (0, :categoryId, :name, :price, :description, :image)";
+        $query = "INSERT INTO services (id, categoryId, name, price, description, image) VALUES (0, (?), (?), (?), (?), (?))";
         $step = $pdo->prepare($query);
-        $step->bindParam(':categoryId', $categoryId, PDO::PARAM_INT);
-        $step->bindParam(':name', $name, PDO::PARAM_STR);
-        $step->bindParam(':price', $price, PDO::PARAM_STR);
-        $step->bindParam(':description', $description, PDO::PARAM_STR);
-        $step->bindParam(':image', $image, PDO::PARAM_LOB);
+        $step->bindParam(1, $categoryId, PDO::PARAM_INT);
+        $step->bindParam(2, $name, PDO::PARAM_STR);
+        $step->bindParam(3, $price, PDO::PARAM_STR);
+        $step->bindParam(4, $description, PDO::PARAM_STR);
+        $step->bindParam(5, $image, PDO::PARAM_LOB);
 
         if ($step->execute()) {
             echo "Data with Photo is added";

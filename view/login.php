@@ -1,7 +1,7 @@
 <?php
 require_once("../connection/connection.php");
 session_start();
-$_SESSION = array();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,8 +13,7 @@ $_SESSION = array();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="../view/css/styles.css">
-    <script src="../view/js/app.js" defer></script>
-    <title>Document</title>
+    <title>HardwareHub</title>
 </head>
 <body>
     <header>
@@ -22,7 +21,8 @@ $_SESSION = array();
             <span></span>
         </div>
         <ul class="sidenav retract">
-            <button class="dropdown-btn">Productos 
+            <li><a href="../view/home.php">Home</a></li>
+            <button class="dropdown-btn">Products 
                 <img class="bx" src="../view/media/arrow-down-icon.png"/>
             </button>
             <ul class="dropdown-container">
@@ -32,14 +32,14 @@ $_SESSION = array();
                 <li><a href="#">Peripherals</a></li>
                 <li><a href="#">Keys</a></li>
             </ul>
-            <button class="dropdown-btn">Servicios 
+            <button class="dropdown-btn">Services 
                 <img class="bx" src="../view/media/arrow-down-icon.png"/>
             </button>
             <ul class="dropdown-container">
-                <li><a href="#">All Services</a></li>
+                <li><a href="../view/services.php">All Services</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a href="#">Design a website</a></li>
-                <li><a href="#">Check and upgrade your performance</a></li>
+                <li><a href="#">Check and upgrade PC's performance</a></li>
                 <li><a href="#">Install drivers and programs</a></li>
                 <li><a href="#">PC repair</a></li>
                 <li><a href="#">Bug fixes</a></li>
@@ -52,6 +52,7 @@ $_SESSION = array();
         </div>
     </header>
     <main class="retract">
+        <?= $SESSION["errores"] ?>
         <ul class="nav nav-pills mb-3 d-flex justify-content-center" id="pills-tab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="pills-login-tab" data-bs-toggle="pill" data-bs-target="#pills-login" type="button" role="tab" aria-controls="pills-login" aria-selected="true">Log In</button>
@@ -114,10 +115,6 @@ $_SESSION = array();
                                 <label class="form-label" for="streetNumber">Street Number</label>
                                 <input type="text" id="streetNumber" class="form-control" name="streetNumber">
                             </div>
-                            <div class="col">
-                                <label class="form-label" for="apartmentNumber">Apartment Number</label>
-                                <input type="text" id="apartmentNumber" class="form-control" name="apartmentNumber"/>
-                            </div>
                         </div>
                     </div>
                     <div class="form-outline mb-4">
@@ -149,7 +146,6 @@ $_SESSION = array();
                 </form>
             </div>
         </div>
-        <!-- Pills content -->
     </main>
 </body>
 </html>

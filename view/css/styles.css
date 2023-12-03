@@ -258,3 +258,17 @@ main {
     background-color: #1551ac;
     transition: all 0.3s;
 }
+
+#cartDropdown {
+    position: absolute;
+    left: 0.75rem;
+    top: 2.5rem;
+}
+
+.addToCart-btn {
+    width: 4.5rem;
+    height: 1.5rem;
+    border: none;
+    font-size: 0.75rem;
+    padding: 0.2rem;
+}
