@@ -30,8 +30,8 @@ function addToCart($productId, $pdo) {
             "description" => $productProperties["description"],
             "image" => $productProperties["image"],
             "quantity" => 1
-        ];
-        $cart[] = $newItem;
+        ]; 
+        array_push($newItem, $cart);
     }
 
     setcookie("my_cart", json_encode($cart), time() + (86400 * 30), "/");
