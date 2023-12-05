@@ -1,14 +1,9 @@
 <?php
 require_once("../connection/connection.php");
-require_once("../model/User.php");
-require_once("../controller/UserController.php");
-require_once("../model/UserIMP.php");
-//session_start();
+require_once("../controller/ServicesController.php");
 ?>
-
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,11 +12,11 @@ require_once("../model/UserIMP.php");
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="../view/css/styles.css">
-    <title>Perfil</title>
+    <script src="../view/js/app.js" defer></script>
+    <title>HardwareHub</title>
 </head>
-
 <body>
-    <header>
+<header>
         <div class="menu-icon">
             <span></span>
         </div>
@@ -41,7 +36,7 @@ require_once("../model/UserIMP.php");
                 <img class="bx" src="../view/media/arrow-down-icon.png"/>
             </button>
             <ul class="dropdown-container">
-                <li><a href="#">All Services</a></li>
+                <li><a href="../view/services.php">All Services</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a href="#">Design a website</a></li>
                 <li><a href="#">Check and upgrade PC's performance</a></li>
@@ -67,17 +62,30 @@ require_once("../model/UserIMP.php");
         <?php endif;?>
     </header>
     <main class="retract">
-    <div class="shopName">
-            <h1>HardwareHub</h1>
-        </div>
-        <div>
-            <h2><?php echo $userObject->__get("userName"); ?>'s Profile</h2>
-            <p>Email: <?php echo $userObject->__get("email"); ?></p>
-            <p>User since: <?php echo $userObject->__get("createDate"); ?></p>
-        </div>
-        <a href="../view/home.php">Return to Main Page</a>
+        <h1>New Product</h1>
+        <form action='../controller/ServicesController.php' method='post' enctype='multipart/form-data' class="m-4">
+            <div class="mb-3 d-flex flex-column align-items-center">
+                <label for="categoryID" class="form-label">Category ID:</label>
+                <input type="number" class="form-control w-50 ms-25" id="categoryID" name="categoryID" required>
+            </div>
+            <div class="mb-3 d-flex flex-column align-items-center">
+                <label for="name" class="form-label">Name:</label>
+                <input type="text" class="form-control w-50 ms-25" id="name" name="name" required>
+            </div>
+            <div class="mb-3 d-flex flex-column align-items-center">
+                <label for="price" class="form-label">Price:</label>
+                <input type="number" class="form-control w-50 ms-25" id="price" name="price" step="0.01" required>
+            </div>
+            <div class="mb-3 d-flex flex-column align-items-center">
+                <label for="description" class="form-label">Description:</label>
+                <input type="text" class="form-control w-50 ms-25" id="description" name="description" required>
+            </div>
+            <div class="mb-3 d-flex flex-column align-items-center">
+                <label for="image" class="form-label">Upload Image:</label>
+                <input type="file" class="form-control w-50 ms-25" id="image" name="image" required>
+            </div>
+            <button type="submit" class="btn btn-primary px-5">Submit</button>
+        </form>
     </main>
-
 </body>
-
 </html>

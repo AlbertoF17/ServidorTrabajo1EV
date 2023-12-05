@@ -4,7 +4,7 @@ require_once("../model/Product.php");
 
 function addToCart($productId, $pdo) {
     // Obtener el carrito actual de las cookies
-    $cart = isset($_COOKIE["my_cart"]) ? json_decode($_COOKIE["my_cart"]) : [];
+    $cart = isset($_COOKIE["my_cart"]) ? json_decode($_COOKIE["my_cart"], true) : [];
 
     $stmt = $pdo->prepare("SELECT * FROM products WHERE id = (?)");
     $stmt->execute([$productId]);
@@ -31,13 +31,18 @@ function addToCart($productId, $pdo) {
             "image" => $productProperties["image"],
             "quantity" => 1
         ]; 
-        array_push($newItem, $cart);
+        // Obtener el carrito actual de las cookies
+        $cart = isset($_COOKIE["my_cart"]) ? json_decode($_COOKIE["my_cart"], true) : [];
+
+        // Agregar el nuevo item al carrito
+        $cart[] = $newItem;
+
+        // Actualizar la cookie con el carrito actualizado
+        setcookie("my_cart", json_encode($cart), time() + (86400 * 30), "/");
+        setcookie("test_cookie", $productProperties["name"], time() + 3600, "/");
+
     }
-
-    setcookie("my_cart", json_encode($cart), time() + (86400 * 30), "/");
-
 }
-
 
 function removeFromCart($productId) {
     // Obtener el carrito actual de las cookies

@@ -1,5 +1,6 @@
 <?php
 require_once(__DIR__."/../connection/connection.php");
+require_once(__DIR__."/../controller/AboutUsController.php");
 session_start();
 ?>
 <!DOCTYPE html>
@@ -64,6 +65,22 @@ session_start();
     <main class="retract">
         <div class="shopName">
             <h1>HardwareHub</h1>
+        </div>
+        <div>
+            <p class="mx-2 px-4">
+                Welcome to HardwareHub! We're a new tech company with a simple goal: to make your tech life awesome.
+                We sell computer stuff online, from components to cool peripherals.
+                Our team is a bunch of tech experts who are here to help you with anything tech-related, whether you're building a computer or need tech services,
+                we've got your back. Our mission is to make tech easy and fun for you.</p>
+        </div>
+        <div class="d-flex flex-wrap justify-content-center align-items-stretch p-3 gap-4">
+            <?php foreach($employees as $employee): ?>
+                <div class="w-25 border rounded d-flex flex-column align-items-center justify-content-between">
+                    <h3><?= $employee->__get("firstName")." ".$employee->__get("lastName") ?></h3>
+                    <img src="../media/<?= $employee->__get("firstName") ?>.jpeg" class="w-50"/>
+                    <p class="mt-1"><?= $employee->__get("title") ?></p>
+                </div>
+            <?php endforeach; ?>
         </div>
     </main>
 </html>

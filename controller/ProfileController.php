@@ -1,8 +1,8 @@
 <?php
-    require_once __DIR__ . "/../connection/connection.php";
-    require_once __DIR__ . "/../model/User.php";
-    require_once __DIR__ . "/../model/Address.php";
-    session_start();
+require_once __DIR__ . "/../connection/connection.php";
+require_once __DIR__ . "/../model/User.php";
+require_once __DIR__ . "/../model/Address.php";
+session_start();
 
     if (isset($_SESSION["usuario"])) {
         $userObject = $_SESSION["usuario"];

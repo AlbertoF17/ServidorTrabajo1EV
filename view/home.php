@@ -2,6 +2,11 @@
 require_once(__DIR__."/../connection/connection.php");
 require_once(__DIR__."/../model/User.php");
 require_once(__DIR__."/../model/Address.php");
+require_once(__DIR__."/../model/Service.php");
+require_once(__DIR__."/../model/Product.php");
+require_once(__DIR__."/../model/ServiceIMP.php");
+require_once(__DIR__."/../model/ProductIMP.php");
+require_once(__DIR__."/../controller/ServicesController.php");
 session_start();
 
 ?>
@@ -76,12 +81,13 @@ session_start();
                 <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
             </div>
             <div class="carousel-inner">
-                <div class="carousel-item active">
-                <img src="../view/media/arrow-down-icon.png" class="d-block" alt="...">
+                <!-- <div class="carousel-item active">
+                <?php $encodedImage = base64_encode($allServices[2]->image); ?>
+                <img src="<?= $encodedImage ?>" class="d-block" alt="...">
                 <div class="carousel-caption d-none d-md-block">
-                    <h5>First slide label</h5>
-                    <p>Some representative placeholder content for the first slide.</p>
-                </div>
+                    <h5><?= $allServices[2]->__get("name"); ?></h5>
+                    <p><?= $allServices[2]->__get("description"); ?></p>
+                </div> -->
                 </div>
                 <div class="carousel-item">
                 <img src="../view/media/arrow-down-icon.png" class="d-block" alt="...">

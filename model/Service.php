@@ -6,15 +6,15 @@ class Service {
     protected $name;
     protected $price;
     protected $description;
-    protected $picture;
+    protected $image;
 
-    public function __construct($id, $categoryId, $name, $price, $description, $picture) {
+    public function __construct($id, $categoryId, $name, $price, $description, $image) {
         $this->id = $id;
         $this->categoryId = $categoryId;
         $this->name = $name;
         $this->price = $price;
         $this->description = $description;
-        $this->picture = $picture;
+        $this->image = $image;
     }
 
     public function __get($atributo) {

@@ -1,7 +1,5 @@
 <?php
 require_once("../connection/connection.php");
-session_start();
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,7 +50,9 @@ session_start();
         </div>
     </header>
     <main class="retract">
-        <?= $SESSION["errores"] ?>
+        <div class="shopName">
+            <h1>HardwareHub</h1>
+        </div>
         <ul class="nav nav-pills mb-3 d-flex justify-content-center" id="pills-tab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="pills-login-tab" data-bs-toggle="pill" data-bs-target="#pills-login" type="button" role="tab" aria-controls="pills-login" aria-selected="true">Log In</button>

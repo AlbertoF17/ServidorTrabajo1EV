@@ -15,7 +15,7 @@ require_once("../controller/ProductsController.php");
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="../view/css/styles.css">
     <script src="../view/js/app.js" defer></script>
-    <title>Document</title>
+    <title>HardwareHub</title>
 </head>
 <body>
 <header>
@@ -51,7 +51,7 @@ require_once("../controller/ProductsController.php");
                 <li><a href="#">Website maintenance</a></li>
             </ul>
         </li>
-        <li><a href="#aboutUs">About Us</a></li>
+        <li><a href="../view/aboutUs.php">About Us</a></li>
     </ul>
     <?php if(isset($_SESSION["usuario"])) : ?>
         <div class="dropdown d-flex justify-content-end">
@@ -100,10 +100,10 @@ require_once("../controller/ProductsController.php");
         </div>
     <?php endif; ?>
     <div class="shopName">
-        <?= var_dump($_COOKIE["my_cart"]); ?>
         <h1>HardwareHub</h1>
     </div>
     <div>
+        <!-- 
         <div>
             <?php if (isset($_SESSION["usuario"])) : ?>
                 <form action="../controller/CartController.php" method="get">
@@ -118,6 +118,7 @@ require_once("../controller/ProductsController.php");
                 </form>
             <?php endif; ?>
         </div>
+            -->
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">All products</button>
@@ -127,12 +128,9 @@ require_once("../controller/ProductsController.php");
             </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active p-4" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
-            <ul class="list-unstyled list-group list-group-horizontal d-flex flex-wrap">
-            <?php if(!empty($allProducts)){
-                foreach ($allProducts as $product):?>
-                <li class="product list-item w-25">
-                    <div class="container d-flex flex-column align-items-center pb-3 border rounded">
+            <div class="tab-pane show active p-4 d-flex flex-wrap gap-4" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0" id="productdiv">
+                <?php foreach ($allProducts as $product):?>
+                    <div class="container d-flex flex-column align-items-center justify-content-between pb-3 border rounded w-25">
                         <?php
                             $imageData = base64_encode($product->image);
                         ?>
@@ -147,64 +145,64 @@ require_once("../controller/ProductsController.php");
                             </form>
                         <?php endif; ?>
                     </div>
-                </li>
-            <?php endforeach; 
-            } ?>
-            </ul>
+                <?php endforeach; ?>
             </div>
-            <div class="tab-pane fade p-4" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
-                <ul class="list-unstyled list-inline">
-                <?php if(!empty($components)){
-                    foreach ($components as $product):?>
-                    <li class="product">
-                        <div class="container w-50 d-flex flex-column justify-content-center align-items-center">
-                            <?php
-                                $imageData = base64_encode($product->image);
-                            ?>
-                            <img src="data:image/jpeg;base64,<?php echo $imageData; ?>" alt="Product Image" class="w-50">
-                            <p><?php echo $product->name; ?></p>
-                            <p><?php echo $product->price."€"; ?></p>
-                        </div>
-                    </li>
-                <?php endforeach; 
-                } ?>
-            </ul>
+            <div class="tab-pane fade p-4 d-flex flex-wrap gap-4" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+            <?php foreach ($components as $product):?>
+                    <div class="container d-flex flex-column align-items-center justify-content-between pb-3 border rounded w-25">
+                        <?php
+                            $imageData = base64_encode($product->image);
+                        ?>
+                        <img src="data:image/jpeg;base64,<?php echo $imageData; ?>" alt="Product Image" class="w-50">
+                        <p class="m-0 fs-3"><?php echo $product->name; ?></p>
+                        <p class="m-0 fs-6"><?php echo $product->description; ?></p>
+                        <p class="m-0"><?php echo $product->price."€"; ?></p>
+                        <?php if(isset($_SESSION["usuario"])): ?>
+                            <form action="../controller/CartController.php" method="get">
+                                <input type="hidden" name="add_to_cart" value="<?php echo $product->id; ?>">
+                                <button type="submit" class="btn-primary addToCart-btn">Add to cart</button>
+                            </form>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
             </div>
-            <div class="tab-pane fade p-4" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
-                <ul class="list-unstyled">
-                <?php if(!empty($peripherals)){
-                    foreach ($peripherals as $product):?>
-                    <li class="product">
-                        <div class="container w-50 d-flex flex-column justify-content-center align-items-center">
-                            <?php
-                                $imageData = base64_encode($product->image);
-                            ?>
-                            <img src="data:image/jpeg;base64,<?php echo $imageData; ?>" alt="Product Image" class="w-50">
-                            <p><?php echo $product->name; ?></p>
-                            <p><?php echo $product->price."€"; ?></p>
-                        </div>
-                    </li>
-                <?php endforeach; 
-                } ?>
-                </ul>
+            <div class="tab-pane fade p-4 d-flex flex-wrap gap-4" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+                <?php foreach ($peripherals as $product):?>
+                    <div class="container d-flex flex-column align-items-center justify-content-between pb-3 border rounded w-25">
+                        <?php
+                            $imageData = base64_encode($product->image);
+                        ?>
+                        <img src="data:image/jpeg;base64,<?php echo $imageData; ?>" alt="Product Image" class="w-50">
+                        <p class="m-0 fs-3"><?php echo $product->name; ?></p>
+                        <p class="m-0 fs-6"><?php echo $product->description; ?></p>
+                        <p class="m-0"><?php echo $product->price."€"; ?></p>
+                        <?php if(isset($_SESSION["usuario"])): ?>
+                            <form action="../controller/CartController.php" method="get">
+                                <input type="hidden" name="add_to_cart" value="<?php echo $product->id; ?>">
+                                <button type="submit" class="btn-primary addToCart-btn">Add to cart</button>
+                            </form>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
             </div>
-            <div class="tab-pane fade p-4" id="nav-disabled" role="tabpanel" aria-labelledby="nav-disabled-tab" tabindex="0">
-                <ul class="list-unstyled">
-                <?php if(!empty($keys)){
-                    foreach ($keys as $product):?>
-                    <li class="product">
-                        <div class="container w-50 d-flex flex-column justify-content-center align-items-center">
-                            <?php
-                                $imageData = base64_encode($product->image);
-                            ?>
-                            <img src="data:image/jpeg;base64,<?php echo $imageData; ?>" alt="Product Image" class="w-50">
-                            <p><?php echo $product->name; ?></p>
-                            <p><?php echo $product->price."€"; ?></p>
-                        </div>
-                    </li>
-                <?php endforeach; 
-                } ?>
-                </ul>
+            <div class="tab-pane fade p-4 d-flex flex-wrap gap-4" id="nav-disabled" role="tabpanel" aria-labelledby="nav-disabled-tab" tabindex="0">
+                <?php foreach ($keys as $product):?>
+                    <div class="container d-flex flex-column align-items-center justify-content-between pb-3 border rounded w-25">
+                        <?php
+                            $imageData = base64_encode($product->image);
+                        ?>
+                        <img src="data:image/jpeg;base64,<?php echo $imageData; ?>" alt="Product Image" class="w-50">
+                        <p class="m-0 fs-3"><?php echo $product->name; ?></p>
+                        <p class="m-0 fs-6"><?php echo $product->description; ?></p>
+                        <p class="m-0"><?php echo $product->price."€"; ?></p>
+                        <?php if(isset($_SESSION["usuario"])): ?>
+                            <form action="../controller/CartController.php" method="get">
+                                <input type="hidden" name="add_to_cart" value="<?php echo $product->id; ?>">
+                                <button type="submit" class="btn-primary addToCart-btn">Add to cart</button>
+                            </form>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>

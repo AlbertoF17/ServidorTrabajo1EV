@@ -7,11 +7,17 @@ $newService = newService($pdo);
 
 $allServices = selectAllServices($pdo);
 
-$components = selectProductsByCategory($pdo, 1);
+$webDesign = selectServicesByCategory($pdo, 4);
 
-$peripherals = selectProductsByCategory($pdo, 2);
+$upgradePreformance = selectServicesByCategory($pdo, 5);
 
-$keys = selectProductsByCategory($pdo, 3);
+$drivers = selectServicesByCategory($pdo, 6);
+
+$repair = selectServicesByCategory($pdo, 7);
+
+$bugFix = selectServicesByCategory($pdo, 8);
+
+$webManteinance = selectServicesByCategory($pdo, 9);
 
 $pdo = null;
 ?>
