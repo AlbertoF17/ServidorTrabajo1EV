@@ -50,4 +50,20 @@ function selectProductsByCategory($pdo, $category){
     }
     return $results;
 }
+
+function selectProductByID($pdo, $productId) {
+    $result = [];
+    $query = "SELECT * FROM products WHERE id = (?)";
+    $step = $pdo->prepare($query);
+    $step->execute([$productId]);
+
+    // Utiliza fetch en lugar de fetchAll
+    $row = $step->fetch(PDO::FETCH_ASSOC);
+
+    if ($row) {
+        // Crea un objeto Product con los valores de la fila
+        $product = new Product($row["id"], $row["categoryId"], $row["name"], $row["price"], $row["description"], $row["image"]);
+    }
+    return $product;
+}
 ?>

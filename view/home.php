@@ -30,38 +30,17 @@ session_start();
         </div>
         <ul class="sidenav retract">
             <li><a href="#">Home</a></li>
-            <button class="dropdown-btn">Products 
-                <img class="bx" src="../view/media/arrow-down-icon.png"/>
-            </button>
-            <ul class="dropdown-container">
-                <li><a href="../view/products.php">All Products</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a href="#">Components</a></li>
-                <li><a href="#">Peripherals</a></li>
-                <li><a href="#">Keys</a></li>
-            </ul>
-            <button class="dropdown-btn">Services 
-                <img class="bx" src="../view/media/arrow-down-icon.png"/>
-            </button>
-            <ul class="dropdown-container">
-                <li><a href="../view/services.php">All Services</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a href="#">Design a website</a></li>
-                <li><a href="#">Check and upgrade PC's performance</a></li>
-                <li><a href="#">Install drivers and programs</a></li>
-                <li><a href="#">PC repair</a></li>
-                <li><a href="#">Bug fixes</a></li>
-                <li><a href="#">Website maintenance</a></li>
-            </ul>
-            <li><a href="#aboutUs">About Us</a></li>
+            <li><a href="../view/products.php">Products</a></li>
+            <li><a href="../view/services.php">Services</a></li>
+            <li><a href="../view/aboutUs.php">About Us</a></li>
         </ul>
-        <?php if(isset($_SESSION["usuario"])) : ?>
+        <?php if(isset($_SESSION["user"])) : ?>
             <div class="dropdown d-flex justify-content-end">
                 <button class="btn btn-light dropdown-toggle corner-dropdown" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="../media/user.png" alt="User image"/>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <li><a class="dropdown-item" href="../controller/ProfileController.php">Go to profile</a></li>
+                    <li><a class="dropdown-item" href="../view/profile.php">Go to profile</a></li>
                     <li><a class="dropdown-item" href="../controller/LogoutController.php">Logout</a></li>
                 </ul>
             </div>
@@ -73,46 +52,7 @@ session_start();
         <div class="shopName">
             <h1>HardwareHub</h1>
         </div>
-        <div id="carouselExampleCaptions" class="carousel slide w-100">
-            <h2>Recommeded Prodcuts</h2>
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-            </div>
-            <div class="carousel-inner">
-                <!-- <div class="carousel-item active">
-                <?php $encodedImage = base64_encode($allServices[2]->image); ?>
-                <img src="<?= $encodedImage ?>" class="d-block" alt="...">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5><?= $allServices[2]->__get("name"); ?></h5>
-                    <p><?= $allServices[2]->__get("description"); ?></p>
-                </div> -->
-                </div>
-                <div class="carousel-item">
-                <img src="../view/media/arrow-down-icon.png" class="d-block" alt="...">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>Second slide label</h5>
-                    <p>Some representative placeholder content for the second slide.</p>
-                </div>
-                </div>
-                <div class="carousel-item">
-                <img src="../view/media/arrow-down-icon.png" class="d-block" alt="...">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>Third slide label</h5>
-                    <p>Some representative placeholder content for the third slide.</p>
-                </div>
-                </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
+        
         <div>
             <p>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</p>
         </div>

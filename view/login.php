@@ -1,5 +1,6 @@
 <?php
 require_once("../connection/connection.php");
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,30 +21,9 @@ require_once("../connection/connection.php");
         </div>
         <ul class="sidenav retract">
             <li><a href="../view/home.php">Home</a></li>
-            <button class="dropdown-btn">Products 
-                <img class="bx" src="../view/media/arrow-down-icon.png"/>
-            </button>
-            <ul class="dropdown-container">
-                <li><a href="../view/products.php">All Products</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a href="#">Components</a></li>
-                <li><a href="#">Peripherals</a></li>
-                <li><a href="#">Keys</a></li>
-            </ul>
-            <button class="dropdown-btn">Services 
-                <img class="bx" src="../view/media/arrow-down-icon.png"/>
-            </button>
-            <ul class="dropdown-container">
-                <li><a href="../view/services.php">All Services</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a href="#">Design a website</a></li>
-                <li><a href="#">Check and upgrade PC's performance</a></li>
-                <li><a href="#">Install drivers and programs</a></li>
-                <li><a href="#">PC repair</a></li>
-                <li><a href="#">Bug fixes</a></li>
-                <li><a href="#">Website maintenance</a></li>
-            </ul>
-            <li><a href="#aboutUs">About Us</a></li>
+            <li><a href="../view/products.php">Products</a></li>
+            <li><a href="../view/services.php">Services</a></li>
+            <li><a href="../view/aboutUs.php">About Us</a></li>
         </ul>
         <div>
             <a href="../view/home.php" class="btn btn-primary corner-btn">Return to main page</a>

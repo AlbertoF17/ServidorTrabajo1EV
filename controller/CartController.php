@@ -15,4 +15,5 @@ if (isset($_GET["add_to_cart"])) {
 }
 
 header("Location: ../view/products.php");
+$pdo = null;
 ?>

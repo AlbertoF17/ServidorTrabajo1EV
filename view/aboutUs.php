@@ -22,33 +22,12 @@ session_start();
             <span></span>
         </div>
         <ul class="sidenav retract">
-            <li><a href="#">Home</a></li>
-            <button class="dropdown-btn">Products 
-                <img class="bx" src="../view/media/arrow-down-icon.png"/>
-            </button>
-            <ul class="dropdown-container">
-                <li><a href="../view/products.php">All Products</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a href="#">Components</a></li>
-                <li><a href="#">Peripherals</a></li>
-                <li><a href="#">Keys</a></li>
-            </ul>
-            <button class="dropdown-btn">Services 
-                <img class="bx" src="../view/media/arrow-down-icon.png"/>
-            </button>
-            <ul class="dropdown-container">
-                <li><a href="../view/services.php">All Services</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a href="#">Design a website</a></li>
-                <li><a href="#">Check and upgrade PC's performance</a></li>
-                <li><a href="#">Install drivers and programs</a></li>
-                <li><a href="#">PC repair</a></li>
-                <li><a href="#">Bug fixes</a></li>
-                <li><a href="#">Website maintenance</a></li>
-            </ul>
-            <li><a href="#aboutUs">About Us</a></li>
+            <li><a href="../view/home.php">Home</a></li>
+            <li><a href="../view/products.php">Products</a></li>
+            <li><a href="../view/services.php">Services</a></li>
+            <li><a href="#">About Us</a></li>
         </ul>
-        <?php if(isset($_SESSION["usuario"])) : ?>
+        <?php if(isset($_SESSION["user"])) : ?>
             <div class="dropdown d-flex justify-content-end">
                 <button class="btn btn-light dropdown-toggle corner-dropdown" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="../media/user.png" alt="User image"/>
@@ -81,6 +60,18 @@ session_start();
                     <p class="mt-1"><?= $employee->__get("title") ?></p>
                 </div>
             <?php endforeach; ?>
+        </div>
+        <div class="d-flex flex-column justify-content-center align-items-center my-4 gap-2">
+            <h2>Contact Us</h2>
+            <form method="post" class="w-100 d-flex flex-column justify-content-center align-items-center">
+                <textarea class="form-control w-75" rows="10" name="message" placeholder="Write your message here..." required></textarea>
+                <button type="submit" name="send" class="btn btn-primary mt-2 fs-5">Send</button>
+            </form>
+        </div>
+        <div class="d-flex flex-column align-items-end px-4 pb-3">
+            <p class="m-0">Calle Espinosa y Cárcel, 21</p>
+            <p class="m-0">Sevilla, 41005</p>
+            <p class="m-0">954 93 20 81</p>
         </div>
     </main>
 </html>

@@ -1,7 +1,7 @@
 <?php
-require_once("../connection/connection.php");
-require_once("../model/ServiceIMP.php");
-require_once("../model/Service.php");
+require_once(__DIR__."/../connection/connection.php");
+require_once(__DIR__."/../model/ServiceIMP.php");
+require_once(__DIR__."/../model/Service.php");
 
 $newService = newService($pdo);
 

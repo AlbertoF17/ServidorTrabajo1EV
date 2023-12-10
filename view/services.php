@@ -22,29 +22,8 @@ require_once(__DIR__."/../controller/ServicesController.php");
         </div>
         <ul class="sidenav retract">
             <li><a href="../view/home.php">Home</a></li>
-            <button class="dropdown-btn">Products 
-                <img class="bx" src="../view/media/arrow-down-icon.png"/>
-            </button>
-            <ul class="dropdown-container">
-                <li><a href="../view/products.php">All Products</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a href="#">Components</a></li>
-                <li><a href="#">Peripherals</a></li>
-                <li><a href="#">Keys</a></li>
-            </ul>
-            <button class="dropdown-btn">Services 
-                <img class="bx" src="../view/media/arrow-down-icon.png"/>
-            </button>
-            <ul class="dropdown-container">
-                <li><a href="#">All Services</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a href="#">Design a website</a></li>
-                <li><a href="#">Check and upgrade PC's performance</a></li>
-                <li><a href="#">Install drivers and programs</a></li>
-                <li><a href="#">PC repair</a></li>
-                <li><a href="#">Bug fixes</a></li>
-                <li><a href="#">Website maintenance</a></li>
-            </ul>
+            <li><a href="../view/products.php">Products</a></li>
+            <li><a href="#">Services</a></li>
             <li><a href="../view/aboutUs.php">About Us</a></li>
         </ul>
         <?php if(isset($_SESSION["usuario"])) : ?>
@@ -88,12 +67,13 @@ require_once(__DIR__."/../controller/ServicesController.php");
                             <p class="m-0 fs-3"><?php echo $service->name; ?></p>
                             <p class="m-0 fs-6"><?php echo $service->description; ?></p>
                             <p class="m-0"><?php echo $service->price."€"; ?></p>
-                            <?php if(isset($_SESSION["usuario"])): ?>
+                            <?php if(isset($_SESSION["user"])): ?>
                                 <form action="../controller/CartController.php" method="get">
                                     <input type="hidden" name="add_to_cart" value="<?php echo $service->id; ?>">
                                     <button type="submit" class="btn-primary addToCart-btn">Add to cart</button>
                                 </form>
                             <?php endif; ?>
+                            <a href="../view/service.php?service_id=<?php echo $service->id; ?>" class="btn-primary">View Service</a>
                         </div>
                     <?php endforeach;?>
                 </div>

@@ -6,6 +6,8 @@ $pdo = connection($host, $user, $pass, $bd);
 
 $userObject = getUserObject($pdo);
 
+$userCarts = fetchCarts($pdo);
+
 $pdo = null;
 
 ?>

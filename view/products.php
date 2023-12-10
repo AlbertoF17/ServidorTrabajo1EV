@@ -1,8 +1,8 @@
 <?php
-session_start();
 require_once("../connection/connection.php");
 require_once("../controller/ProductsController.php");
 //require_once("../controller/CartController.php");
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,37 +23,12 @@ require_once("../controller/ProductsController.php");
         <span></span>
     </div>
     <ul class="sidenav retract">
-        <li><a href="../view/home.php">Home</a></li>
-        <li>
-            <button class="dropdown-btn">Products 
-                <img class="bx" src="../view/media/arrow-down-icon.png"/>
-            </button>
-            <ul class="dropdown-container">
-                <li><a href="../view/products.php">All Products</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a href="#">Components</a></li>
-                <li><a href="#">Peripherals</a></li>
-                <li><a href="#">Keys</a></li>
-            </ul>
-        </li>
-        <li>
-            <button class="dropdown-btn">Services 
-                <img class="bx" src="../view/media/arrow-down-icon.png"/>
-            </button>
-            <ul class="dropdown-container">
-                <li><a href="../view/services.php">All Services</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a href="#">Design a website</a></li>
-                <li><a href="#">Check and upgrade PC's performance</a></li>
-                <li><a href="#">Install drivers and programs</a></li>
-                <li><a href="#">PC repair</a></li>
-                <li><a href="#">Bug fixes</a></li>
-                <li><a href="#">Website maintenance</a></li>
-            </ul>
-        </li>
-        <li><a href="../view/aboutUs.php">About Us</a></li>
+    <li><a href="../view/home.php">Home</a></li>
+            <li><a href="#">Products</a></li>
+            <li><a href="../view/services.php">Services</a></li>
+            <li><a href="../view/aboutUs.php">About Us</a></li>
     </ul>
-    <?php if(isset($_SESSION["usuario"])) : ?>
+    <?php if(isset($_SESSION["user"])) : ?>
         <div class="dropdown d-flex justify-content-end">
             <button class="btn btn-light dropdown-toggle corner-dropdown" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                 <img src="../media/user.png" alt="User image"/>
@@ -68,29 +43,35 @@ require_once("../controller/ProductsController.php");
     <?php endif;?>
 </header>
 <main class="retract">
-    <?php if (isset($_SESSION["usuario"])) : ?>
+    <?php if (isset($_SESSION["user"])) : ?>
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="cartDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                 Cart
             </button>
-            <ul class="dropdown-menu" aria-labelledby="cartDropdown">
-                <?php if (isset($_COOKIE["my_cart"]) && !empty($_COOKIE["my_cart"])) : ?>
+            <ul class="dropdown-menu cartList" aria-labelledby="cartDropdown">
+                <?php if (isset($_COOKIE["cart"]) && count(json_decode($_COOKIE["cart"])) > 0) : ?>
                     <?php
                     // Decodificar la cookie JSON
-                    $cartItems = json_decode($_COOKIE["my_cart"]);
-
+                    $cartItems = json_decode($_COOKIE["cart"]);
                     foreach ($cartItems as $item) :
                         ?>
                             <li>
                                 <?= $item->quantity; ?> x <?= $item->name; ?> - <?= $item->price; ?>€
+                                <form action="../controller/CartController.php" method="get">
+                                    <input type="hidden" name="remove_from_cart" value="<?php echo $item->id;?>">
+                                    <button type="submit" class="btn btn-outline-primary removeFromCart-btn">Remove from cart</button>
+                                </form>
                             </li>
                         <?php endforeach; ?>
-                        
                     <li class="dropdown-divider"></li>
                     <li>
                         <form action="../controller/CartController.php" method="get">
                             <input type="hidden" name="clear_cart" value="true">
                             <button type="submit" class="btn btn-outline-danger clearCart-btn">Clear Cart</button>
+                        </form>
+                        <form action="../controller/CartController.php" method="get">
+                            <input type="hidden" name="confirm_purchase" value="true">
+                            <button type="submit" class="btn btn-outline-success confirmPurchase-btn">Confirm Purchase</button>
                         </form>
                     </li>
                 <?php else : ?>
@@ -102,23 +83,7 @@ require_once("../controller/ProductsController.php");
     <div class="shopName">
         <h1>HardwareHub</h1>
     </div>
-    <div>
-        <!-- 
-        <div>
-            <?php if (isset($_SESSION["usuario"])) : ?>
-                <form action="../controller/CartController.php" method="get">
-                    <input type="hidden" name="remove_from_cart" value="<?php echo $product->id; ?>">
-                    <button type="submit" class="btn-primary removeFromCart-btn">Remove from cart</button>
-                </form>
-            <?php endif; ?>
-            <?php if (isset($_SESSION["usuario"])) : ?>
-                <form action="../controller/CartController.php" method="get">
-                    <input type="hidden" name="confirm_purchase" value="true">
-                    <button type="submit" class="btn-primary confirmPurchase-btn">Confirm Purchase</button>
-                </form>
-            <?php endif; ?>
-        </div>
-            -->
+    <div>        
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">All products</button>
@@ -138,12 +103,13 @@ require_once("../controller/ProductsController.php");
                         <p class="m-0 fs-3"><?php echo $product->name; ?></p>
                         <p class="m-0 fs-6"><?php echo $product->description; ?></p>
                         <p class="m-0"><?php echo $product->price."€"; ?></p>
-                        <?php if(isset($_SESSION["usuario"])): ?>
+                        <?php if(isset($_SESSION["user"])): ?>
                             <form action="../controller/CartController.php" method="get">
                                 <input type="hidden" name="add_to_cart" value="<?php echo $product->id; ?>">
                                 <button type="submit" class="btn-primary addToCart-btn">Add to cart</button>
                             </form>
                         <?php endif; ?>
+                        <a href="../view/product.php?product_id=<?php echo $product->id; ?>" class="btn-primary">View Product</a>
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -157,7 +123,7 @@ require_once("../controller/ProductsController.php");
                         <p class="m-0 fs-3"><?php echo $product->name; ?></p>
                         <p class="m-0 fs-6"><?php echo $product->description; ?></p>
                         <p class="m-0"><?php echo $product->price."€"; ?></p>
-                        <?php if(isset($_SESSION["usuario"])): ?>
+                        <?php if(isset($_SESSION["user"])): ?>
                             <form action="../controller/CartController.php" method="get">
                                 <input type="hidden" name="add_to_cart" value="<?php echo $product->id; ?>">
                                 <button type="submit" class="btn-primary addToCart-btn">Add to cart</button>
@@ -176,7 +142,7 @@ require_once("../controller/ProductsController.php");
                         <p class="m-0 fs-3"><?php echo $product->name; ?></p>
                         <p class="m-0 fs-6"><?php echo $product->description; ?></p>
                         <p class="m-0"><?php echo $product->price."€"; ?></p>
-                        <?php if(isset($_SESSION["usuario"])): ?>
+                        <?php if(isset($_SESSION["user"])): ?>
                             <form action="../controller/CartController.php" method="get">
                                 <input type="hidden" name="add_to_cart" value="<?php echo $product->id; ?>">
                                 <button type="submit" class="btn-primary addToCart-btn">Add to cart</button>
@@ -195,7 +161,7 @@ require_once("../controller/ProductsController.php");
                         <p class="m-0 fs-3"><?php echo $product->name; ?></p>
                         <p class="m-0 fs-6"><?php echo $product->description; ?></p>
                         <p class="m-0"><?php echo $product->price."€"; ?></p>
-                        <?php if(isset($_SESSION["usuario"])): ?>
+                        <?php if(isset($_SESSION["user"])): ?>
                             <form action="../controller/CartController.php" method="get">
                                 <input type="hidden" name="add_to_cart" value="<?php echo $product->id; ?>">
                                 <button type="submit" class="btn-primary addToCart-btn">Add to cart</button>
