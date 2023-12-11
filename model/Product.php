@@ -2,14 +2,16 @@
 
 class Product {
     protected $id;
+    protected $type;
     protected $categoryId;
     protected $name;
     protected $price;
     protected $description;
     protected $image;
 
-    public function __construct($id, $categoryId, $name, $price, $description, $image) {
+    public function __construct($id, $type, $categoryId, $name, $price, $description, $image) {
         $this->id = $id;
+        $this->type = "product";
         $this->categoryId = $categoryId;
         $this->name = $name;
         $this->price = $price;

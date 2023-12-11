@@ -1,7 +1,6 @@
 <?php
 require_once("../connection/connection.php");
 require_once("../controller/ProductsController.php");
-//require_once("../controller/CartController.php");
 session_start();
 ?>
 <!DOCTYPE html>
@@ -53,16 +52,18 @@ session_start();
                     <?php
                     // Decodificar la cookie JSON
                     $cartItems = json_decode($_COOKIE["cart"]);
-                    foreach ($cartItems as $item) :
-                        ?>
-                            <li>
-                                <?= $item->quantity; ?> x <?= $item->name; ?> - <?= $item->price; ?>€
-                                <form action="../controller/CartController.php" method="get">
-                                    <input type="hidden" name="remove_from_cart" value="<?php echo $item->id;?>">
-                                    <button type="submit" class="btn btn-outline-primary removeFromCart-btn">Remove from cart</button>
-                                </form>
-                            </li>
-                        <?php endforeach; ?>
+                    foreach ($cartItems as $item) : ?>
+                        <li>
+                            <?= $item->quantity; ?> x <?= $item->name; ?> - <?= $item->price; ?>€
+                            <form action="../controller/CartController.php" method="get">
+                                <input type="hidden" name="remove_from_cart" value="<?= $item->id; ?>">
+                                <?php if (property_exists($item, 'type')) : ?>
+                                    <input type="hidden" name="type" value="<?= $item->type; ?>">
+                                <?php endif; ?>
+                                <button type="submit" class="btn btn-outline-primary removeFromCart-btn">Remove from cart</button>
+                            </form>
+                        </li>
+                    <?php endforeach; ?>
                     <li class="dropdown-divider"></li>
                     <li>
                         <form action="../controller/CartController.php" method="get">
@@ -83,94 +84,45 @@ session_start();
     <div class="shopName">
         <h1>HardwareHub</h1>
     </div>
-    <div>        
-        <nav>
-            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">All products</button>
-                <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Components</button>
-                <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Peripherals</button>
-                <button class="nav-link" id="nav-disabled-tab" data-bs-toggle="tab" data-bs-target="#nav-disabled" type="button" role="tab" aria-controls="nav-disabled" aria-selected="false">Keys</button>
+    <div class="mb-3">
+        <form method="get">
+            <select id="categoryFilter" name="categoryFilter">
+                <option value="all" <?php echo ($categoryFilter === 'all') ? 'selected' : ''; ?>>All Categories</option>
+                <option value="components" <?php echo ($categoryFilter === 'components') ? 'selected' : ''; ?>>Components</option>
+                <option value="peripherals" <?php echo ($categoryFilter === 'peripherals') ? 'selected' : ''; ?>>Peripherals</option>
+                <option value="keys" <?php echo ($categoryFilter === 'keys') ? 'selected' : ''; ?>>Keys</option>
+            </select>
+            <select id="sortFilter" name="sortFilter">
+                <option value="name" <?php echo ($sortFilter === 'name') ? 'selected' : ''; ?>>Sort by Name</option>
+                <option value="price" <?php echo ($sortFilter === 'price') ? 'selected' : ''; ?>>Sort by Price</option>
+            </select>
+            <select id="orderFilter" name="orderFilter">
+                <option value="asc" <?php echo ($orderFilter === 'asc') ? 'selected' : ''; ?>>Ascending</option>
+                <option value="desc" <?php echo ($orderFilter === 'desc') ? 'selected' : ''; ?>>Descending</option>
+            </select>
+            <button type="submit" class="btn btn-outline-success">Apply Filter</button>
+        </form>
+    </div>
+    <div class="d-flex flex-row flex-wrap gap-4 mb-3">
+        <?php foreach ($allProducts as $product): ?>
+            <?php
+            $imageData = base64_encode($product->image);
+            ?>
+            <div class="container d-flex flex-column align-items-center justify-content-between pb-3 border rounded w-25">
+                <img src="data:image/jpeg;base64,<?php echo $imageData; ?>" alt="Product Image" class="w-50">
+                <p class="m-0 fs-3"><?php echo $product->name; ?></p>
+                <p class="m-0 fs-6"><?php echo $product->description; ?></p>
+                <p class="m-0"><?php echo $product->price."€"; ?></p>
+                <?php if(isset($_SESSION["user"])): ?>
+                    <form action="../controller/CartController.php" method="get">
+                        <input type="hidden" name="type" value="product">
+                        <input type="hidden" name="add_to_cart" value="<?php echo $product->id; ?>">
+                        <button type="submit" class="btn-primary addToCart-btn">Add to cart</button>
+                    </form>
+                <?php endif; ?>
+                <a href="../view/product.php?product_id=<?php echo $product->id; ?>" class="btn-primary">View Product</a>
             </div>
-        </nav>
-        <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane show active p-4 d-flex flex-wrap gap-4" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0" id="productdiv">
-                <?php foreach ($allProducts as $product):?>
-                    <div class="container d-flex flex-column align-items-center justify-content-between pb-3 border rounded w-25">
-                        <?php
-                            $imageData = base64_encode($product->image);
-                        ?>
-                        <img src="data:image/jpeg;base64,<?php echo $imageData; ?>" alt="Product Image" class="w-50">
-                        <p class="m-0 fs-3"><?php echo $product->name; ?></p>
-                        <p class="m-0 fs-6"><?php echo $product->description; ?></p>
-                        <p class="m-0"><?php echo $product->price."€"; ?></p>
-                        <?php if(isset($_SESSION["user"])): ?>
-                            <form action="../controller/CartController.php" method="get">
-                                <input type="hidden" name="add_to_cart" value="<?php echo $product->id; ?>">
-                                <button type="submit" class="btn-primary addToCart-btn">Add to cart</button>
-                            </form>
-                        <?php endif; ?>
-                        <a href="../view/product.php?product_id=<?php echo $product->id; ?>" class="btn-primary">View Product</a>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-            <div class="tab-pane fade p-4 d-flex flex-wrap gap-4" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
-            <?php foreach ($components as $product):?>
-                    <div class="container d-flex flex-column align-items-center justify-content-between pb-3 border rounded w-25">
-                        <?php
-                            $imageData = base64_encode($product->image);
-                        ?>
-                        <img src="data:image/jpeg;base64,<?php echo $imageData; ?>" alt="Product Image" class="w-50">
-                        <p class="m-0 fs-3"><?php echo $product->name; ?></p>
-                        <p class="m-0 fs-6"><?php echo $product->description; ?></p>
-                        <p class="m-0"><?php echo $product->price."€"; ?></p>
-                        <?php if(isset($_SESSION["user"])): ?>
-                            <form action="../controller/CartController.php" method="get">
-                                <input type="hidden" name="add_to_cart" value="<?php echo $product->id; ?>">
-                                <button type="submit" class="btn-primary addToCart-btn">Add to cart</button>
-                            </form>
-                        <?php endif; ?>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-            <div class="tab-pane fade p-4 d-flex flex-wrap gap-4" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
-                <?php foreach ($peripherals as $product):?>
-                    <div class="container d-flex flex-column align-items-center justify-content-between pb-3 border rounded w-25">
-                        <?php
-                            $imageData = base64_encode($product->image);
-                        ?>
-                        <img src="data:image/jpeg;base64,<?php echo $imageData; ?>" alt="Product Image" class="w-50">
-                        <p class="m-0 fs-3"><?php echo $product->name; ?></p>
-                        <p class="m-0 fs-6"><?php echo $product->description; ?></p>
-                        <p class="m-0"><?php echo $product->price."€"; ?></p>
-                        <?php if(isset($_SESSION["user"])): ?>
-                            <form action="../controller/CartController.php" method="get">
-                                <input type="hidden" name="add_to_cart" value="<?php echo $product->id; ?>">
-                                <button type="submit" class="btn-primary addToCart-btn">Add to cart</button>
-                            </form>
-                        <?php endif; ?>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-            <div class="tab-pane fade p-4 d-flex flex-wrap gap-4" id="nav-disabled" role="tabpanel" aria-labelledby="nav-disabled-tab" tabindex="0">
-                <?php foreach ($keys as $product):?>
-                    <div class="container d-flex flex-column align-items-center justify-content-between pb-3 border rounded w-25">
-                        <?php
-                            $imageData = base64_encode($product->image);
-                        ?>
-                        <img src="data:image/jpeg;base64,<?php echo $imageData; ?>" alt="Product Image" class="w-50">
-                        <p class="m-0 fs-3"><?php echo $product->name; ?></p>
-                        <p class="m-0 fs-6"><?php echo $product->description; ?></p>
-                        <p class="m-0"><?php echo $product->price."€"; ?></p>
-                        <?php if(isset($_SESSION["user"])): ?>
-                            <form action="../controller/CartController.php" method="get">
-                                <input type="hidden" name="add_to_cart" value="<?php echo $product->id; ?>">
-                                <button type="submit" class="btn-primary addToCart-btn">Add to cart</button>
-                            </form>
-                        <?php endif; ?>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        </div>
+        <?php endforeach; ?>
     </div>
     <a href="newProduct.php">
         <button class="add-button">+</button>

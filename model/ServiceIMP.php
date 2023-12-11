@@ -28,28 +28,26 @@ function newService($pdo){
     }
 }
 
-function selectAllServices($pdo){
-    $results = [];
-    $query = "SELECT * FROM services";
-    $step = $pdo->prepare($query);
-    $step->execute();
-    foreach ($step->fetchAll() as $p) {
-        $service = new Service($p["id"], $p["categoryId"], $p["name"], $p["price"], $p["description"], $p["image"]);
-        array_push($results, $service);
-    }
-    return $results;
+function selectAllServices($pdo, $sortFilter, $orderFilter) {
+    $query = "SELECT * FROM services ORDER BY $sortFilter $orderFilter";
+    return fetchServices($pdo, $query);
 }
 
-function selectServicesByCategory($pdo, $category){
+function selectServicesByCategory($pdo, $category, $sortFilter, $orderFilter) {
+    $query = "SELECT * FROM services WHERE categoryId = (?) ORDER BY $sortFilter $orderFilter";
+    return fetchServices($pdo, $query, [$category]);
+}
+
+function fetchServices($pdo, $query, $params = []) {
     $results = [];
-    $query = "SELECT * FROM services WHERE categoryId = (?)";
     $step = $pdo->prepare($query);
-    $step->bindParam(1, $category, PDO::PARAM_INT);
-    $step->execute();
-    foreach ($step->fetchAll() as $p) {
-        $service = new Service($p["id"], $p["categoryId"], $p["name"], $p["price"], $p["description"], $p["image"]);
+    $step->execute($params);
+
+    foreach ($step->fetchAll() as $s) {
+        $service = new Service($s["id"], "service", $s["categoryId"], $s["name"], $s["price"], $s["description"], $s["image"]);
         array_push($results, $service);
     }
+
     return $results;
 }
 
@@ -63,9 +61,47 @@ function selectServiceByID($pdo, $serviceId) {
     $row = $step->fetch(PDO::FETCH_ASSOC);
 
     if ($row) {
-        // Crea un objeto Product con los valores de la fila
-        $service = new Service($row["id"], $row["categoryId"], $row["name"], $row["price"], $row["description"], $row["image"]);
+        $service = new Service($row["id"], "service", $row["categoryId"], $row["name"], $row["price"], $row["description"], $row["image"]);
     }
     return $service;
 }
+
+function deleteServiceByID($pdo, $serviceId) {
+    try {
+        $pdo->beginTransaction();
+
+        // Eliminar el servicio
+        $query = "DELETE FROM services WHERE id = (?)";
+        $step = $pdo->prepare($query);
+        $step->execute([$serviceId]);
+
+        // Confirmar la transacción
+        $pdo->commit();
+        
+    } catch (Exception $e) {
+        // Ocurrió un error, revertir la transacción
+        $pdo->rollBack();
+        echo "Error: " . $e->getMessage();
+    }
+}
+
+function updateServiceByID($pdo, $serviceId) {
+    try {
+        $pdo->beginTransaction();
+
+        // Eliminar el servicio
+        $query = "UPDATE FROM services SET  WHERE id = (?)";
+        $step = $pdo->prepare($query);
+        $step->execute([$serviceId]);
+
+        // Confirmar la transacción
+        $pdo->commit();
+        
+    } catch (Exception $e) {
+        // Ocurrió un error, revertir la transacción
+        $pdo->rollBack();
+        echo "Error: " . $e->getMessage();
+    }
+}
+
 ?>

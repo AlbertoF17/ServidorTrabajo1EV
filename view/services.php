@@ -1,6 +1,7 @@
 <?php
 require_once(__DIR__."/../connection/connection.php");
 require_once(__DIR__."/../controller/ServicesController.php");
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,7 +27,7 @@ require_once(__DIR__."/../controller/ServicesController.php");
             <li><a href="#">Services</a></li>
             <li><a href="../view/aboutUs.php">About Us</a></li>
         </ul>
-        <?php if(isset($_SESSION["usuario"])) : ?>
+        <?php if(isset($_SESSION["user"])) : ?>
             <div class="dropdown d-flex justify-content-end">
                 <button class="btn btn-light dropdown-toggle corner-dropdown" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="../media/user.png" alt="User image"/>
@@ -41,157 +42,90 @@ require_once(__DIR__."/../controller/ServicesController.php");
         <?php endif;?>
     </header>
     <main class="retract">
+    <?php if (isset($_SESSION["user"])) : ?>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="cartDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                Cart
+            </button>
+            <ul class="dropdown-menu cartList" aria-labelledby="cartDropdown">
+                <?php if (isset($_COOKIE["cart"]) && count(json_decode($_COOKIE["cart"])) > 0) : ?>
+                    <?php
+                    // Decodificar la cookie JSON
+                    $cartItems = json_decode($_COOKIE["cart"]);
+                    foreach ($cartItems as $item) : ?>
+                        <li>
+                            <?= $item->quantity; ?> x <?= $item->name; ?> - <?= $item->price; ?>€
+                            <form action="../controller/CartController.php" method="get">
+                                <input type="hidden" name="remove_from_cart" value="<?= $item->id; ?>">
+                                <?php if (property_exists($item, 'type')) : ?>
+                                    <input type="hidden" name="type" value="<?= $item->type; ?>">
+                                <?php endif; ?>
+                                <button type="submit" class="btn btn-outline-primary removeFromCart-btn">Remove from cart</button>
+                            </form>
+                        </li>
+                    <?php endforeach; ?>
+                    <li class="dropdown-divider"></li>
+                    <li>
+                        <form action="../controller/CartController.php" method="get">
+                            <input type="hidden" name="clear_cart" value="true">
+                            <button type="submit" class="btn btn-outline-danger clearCart-btn">Clear Cart</button>
+                        </form>
+                        <form action="../controller/CartController.php" method="get">
+                            <input type="hidden" name="confirm_purchase" value="true">
+                            <button type="submit" class="btn btn-outline-success confirmPurchase-btn">Confirm Purchase</button>
+                        </form>
+                    </li>
+                <?php else : ?>
+                    <li class="px-3">Cart is empty</li>
+                <?php endif; ?>
+            </ul>
+        </div>
+    <?php endif; ?>
         <div class="shopName">
             <h1>HardwareHub</h1>
         </div>
-        <div>
-            <nav>
-                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">All Services</button>
-                    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Design a website</button>
-                    <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Check and upgrade PC's performanceo</button>
-                    <button class="nav-link" id="nav-disabled-tab" data-bs-toggle="tab" data-bs-target="#nav-disabled" type="button" role="tab" aria-controls="nav-disabled" aria-selected="false">Install drivers and programs</button>
-                    <button class="nav-link" id="nav-hola-tab" data-bs-toggle="tab" data-bs-target="#nav-hola" type="button" role="tab" aria-controls="nav-hola" aria-selected="false">PC repair</button>
-                    <button class="nav-link" id="nav-adios-tab" data-bs-toggle="tab" data-bs-target="#nav-adios" type="button" role="tab" aria-controls="nav-adios" aria-selected="false">Bug fixes</button>
-                    <button class="nav-link" id="nav-jaja-tab" data-bs-toggle="tab" data-bs-target="#nav-jaja" type="button" role="tab" aria-controls="nav-jaja" aria-selected="false">Website maintenance</button>
+        <div class="mb-3">
+            <form method="get">
+                <select id="categoryFilter" name="categoryFilter">
+                    <option value="all" <?php echo ($categoryFilter === 'all') ? 'selected' : ''; ?>>All Categories</option>
+                    <option value="webDesign" <?php echo ($categoryFilter === 'webDesign') ? 'selected' : ''; ?>>Design a website</option>
+                    <option value="upgradePerformance" <?php echo ($categoryFilter === 'upgradePerformance') ? 'selected' : ''; ?>>Check and upgrade PC's preformance</option>
+                    <option value="drivers" <?php echo ($categoryFilter === 'drivers') ? 'selected' : ''; ?>>Install drivers and programs</option>
+                    <option value="repair" <?php echo ($categoryFilter === 'repair') ? 'selected' : ''; ?>>PC repair</option>
+                    <option value="bugFix" <?php echo ($categoryFilter === 'bugFix') ? 'selected' : ''; ?>>Bug fixes</option>
+                    <option value="webMaintenance" <?php echo ($categoryFilter === 'webMaintenance') ? 'selected' : ''; ?>>Website maintenance</option>
+                </select>
+                <select id="sortFilter" name="sortFilter">
+                    <option value="name" <?php echo ($sortFilter === 'name') ? 'selected' : ''; ?>>Sort by Name</option>
+                    <option value="price" <?php echo ($sortFilter === 'price') ? 'selected' : ''; ?>>Sort by Price</option>
+                </select>
+                <select id="orderFilter" name="orderFilter">
+                    <option value="asc" <?php echo ($orderFilter === 'asc') ? 'selected' : ''; ?>>Ascending</option>
+                    <option value="desc" <?php echo ($orderFilter === 'desc') ? 'selected' : ''; ?>>Descending</option>
+                </select>
+                <button type="submit" class="btn btn-outline-success">Apply Filter</button>
+            </form>
+        </div>
+        <div class="d-flex flex-row flex-wrap gap-4 mb-3">
+            <?php foreach ($allServices as $service):?>
+                <div class="container d-flex flex-column align-items-center justify-content-between pb-3 border rounded w-25">
+                    <?php
+                        $imageData = base64_encode($service->image);
+                    ?>
+                    <img src="data:image/jpeg;base64,<?php echo $imageData; ?>" alt="Service Image" class="w-50">
+                    <p class="m-0 fs-3"><?php echo $service->name; ?></p>
+                    <p class="m-0 fs-6"><?php echo $service->description; ?></p>
+                    <p class="m-0"><?php echo $service->price."€"; ?></p>
+                    <?php if(isset($_SESSION["user"])): ?>
+                        <form action="../controller/CartController.php" method="get">
+                            <input type="hidden" name="type" value="service">
+                            <input type="hidden" name="add_to_cart" value="<?php echo $service->id; ?>">
+                            <button type="submit" class="btn-primary addToCart-btn">Add to cart</button>
+                        </form>
+                    <?php endif; ?>
+                    <a href="../view/service.php?service_id=<?php echo $service->id; ?>" class="btn-primary">View Service</a>
                 </div>
-            </nav>
-            <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane show active p-4 d-flex flex-wrap gap-4" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
-                    <?php foreach ($allServices as $service):?>
-                        <div class="container d-flex flex-column align-items-center justify-content-between pb-3 border rounded w-25">
-                            <?php
-                                $imageData = base64_encode($service->image);
-                            ?>
-                            <img src="data:image/jpeg;base64,<?php echo $imageData; ?>" alt="Service Image" class="w-50">
-                            <p class="m-0 fs-3"><?php echo $service->name; ?></p>
-                            <p class="m-0 fs-6"><?php echo $service->description; ?></p>
-                            <p class="m-0"><?php echo $service->price."€"; ?></p>
-                            <?php if(isset($_SESSION["user"])): ?>
-                                <form action="../controller/CartController.php" method="get">
-                                    <input type="hidden" name="add_to_cart" value="<?php echo $service->id; ?>">
-                                    <button type="submit" class="btn-primary addToCart-btn">Add to cart</button>
-                                </form>
-                            <?php endif; ?>
-                            <a href="../view/service.php?service_id=<?php echo $service->id; ?>" class="btn-primary">View Service</a>
-                        </div>
-                    <?php endforeach;?>
-                </div>
-                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
-                <?php foreach ($webDesign as $service):?>
-                    <div class="container d-flex flex-column align-items-center justify-content-between pb-3 border rounded w-25">
-                        <?php
-                            $imageData = base64_encode($service->image);
-                        ?>
-                        <img src="data:image/jpeg;base64,<?php echo $imageData; ?>" alt="Service Image" class="w-50">
-                        <p class="m-0 fs-3"><?php echo $service->name; ?></p>
-                        <p class="m-0 fs-6"><?php echo $service->description; ?></p>
-                        <p class="m-0"><?php echo $service->price."€"; ?></p>
-                        <?php if(isset($_SESSION["usuario"])): ?>
-                            <form action="../controller/CartController.php" method="get">
-                                <input type="hidden" name="add_to_cart" value="<?php echo $service->id; ?>">
-                                <button type="submit" class="btn-primary addToCart-btn">Add to cart</button>
-                            </form>
-                        <?php endif; ?>
-                    </div>
-                <?php endforeach; ?>
-                </div>
-                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
-                <?php foreach ($upgradePreformance as $service):?>
-                    <div class="container d-flex flex-column align-items-center justify-content-between pb-3 border rounded w-25">
-                        <?php
-                            $imageData = base64_encode($service->image);
-                        ?>
-                        <img src="data:image/jpeg;base64,<?php echo $imageData; ?>" alt="Service Image" class="w-50">
-                        <p class="m-0 fs-3"><?php echo $service->name; ?></p>
-                        <p class="m-0 fs-6"><?php echo $service->description; ?></p>
-                        <p class="m-0"><?php echo $service->price."€"; ?></p>
-                        <?php if(isset($_SESSION["usuario"])): ?>
-                            <form action="../controller/CartController.php" method="get">
-                                <input type="hidden" name="add_to_cart" value="<?php echo $service->id; ?>">
-                                <button type="submit" class="btn-primary addToCart-btn">Add to cart</button>
-                            </form>
-                        <?php endif; ?>
-                    </div>
-                <?php endforeach; ?>
-                </div>
-                <div class="tab-pane fade" id="nav-disabled" role="tabpanel" aria-labelledby="nav-disabled-tab" tabindex="0">
-                <?php foreach ($drivers as $service):?>
-                    <div class="container d-flex flex-column align-items-center justify-content-between pb-3 border rounded w-25">
-                        <?php
-                            $imageData = base64_encode($service->image);
-                        ?>
-                        <img src="data:image/jpeg;base64,<?php echo $imageData; ?>" alt="Service Image" class="w-50">
-                        <p class="m-0 fs-3"><?php echo $service->name; ?></p>
-                        <p class="m-0 fs-6"><?php echo $service->description; ?></p>
-                        <p class="m-0"><?php echo $service->price."€"; ?></p>
-                        <?php if(isset($_SESSION["usuario"])): ?>
-                            <form action="../controller/CartController.php" method="get">
-                                <input type="hidden" name="add_to_cart" value="<?php echo $service->id; ?>">
-                                <button type="submit" class="btn-primary addToCart-btn">Add to cart</button>
-                            </form>
-                        <?php endif; ?>
-                    </div>
-                <?php endforeach; ?>
-                </div>
-                <div class="tab-pane fade" id="nav-hola" role="tabpanel" aria-labelledby="nav-hola-tab" tabindex="0">
-                <?php foreach ($repair as $service):?>
-                    <div class="container d-flex flex-column align-items-center justify-content-between pb-3 border rounded w-25">
-                        <?php
-                            $imageData = base64_encode($service->image);
-                        ?>
-                        <img src="data:image/jpeg;base64,<?php echo $imageData; ?>" alt="Service Image" class="w-50">
-                        <p class="m-0 fs-3"><?php echo $service->name; ?></p>
-                        <p class="m-0 fs-6"><?php echo $service->description; ?></p>
-                        <p class="m-0"><?php echo $service->price."€"; ?></p>
-                        <?php if(isset($_SESSION["usuario"])): ?>
-                            <form action="../controller/CartController.php" method="get">
-                                <input type="hidden" name="add_to_cart" value="<?php echo $service->id; ?>">
-                                <button type="submit" class="btn-primary addToCart-btn">Add to cart</button>
-                            </form>
-                        <?php endif; ?>
-                    </div>
-                <?php endforeach; ?>
-                </div>
-                <div class="tab-pane fade" id="nav-adios" role="tabpanel" aria-labelledby="nav-adios-tab" tabindex="0">
-                <?php foreach ($bugFix as $service):?>
-                    <div class="container d-flex flex-column align-items-center justify-content-between pb-3 border rounded w-25">
-                        <?php
-                            $imageData = base64_encode($service->image);
-                        ?>
-                        <img src="data:image/jpeg;base64,<?php echo $imageData; ?>" alt="Service Image" class="w-50">
-                        <p class="m-0 fs-3"><?php echo $service->name; ?></p>
-                        <p class="m-0 fs-6"><?php echo $service->description; ?></p>
-                        <p class="m-0"><?php echo $service->price."€"; ?></p>
-                        <?php if(isset($_SESSION["usuario"])): ?>
-                            <form action="../controller/CartController.php" method="get">
-                                <input type="hidden" name="add_to_cart" value="<?php echo $service->id; ?>">
-                                <button type="submit" class="btn-primary addToCart-btn">Add to cart</button>
-                            </form>
-                        <?php endif; ?>
-                    </div>
-                <?php endforeach; ?>
-                </div>
-                <div class="tab-pane fade" id="nav-jaja" role="tabpanel" aria-labelledby="nav-jaja-tab" tabindex="0">
-                    <?php foreach ($webManteinance as $service):?>
-                        <div class="container d-flex flex-column align-items-center justify-content-between pb-3 border rounded w-25">
-                            <?php
-                                $imageData = base64_encode($service->image);
-                            ?>
-                            <img src="data:image/jpeg;base64,<?php echo $imageData; ?>" alt="Service Image" class="w-50">
-                            <p class="m-0 fs-3"><?php echo $service->name; ?></p>
-                            <p class="m-0 fs-6"><?php echo $service->description; ?></p>
-                            <p class="m-0"><?php echo $service->price."€"; ?></p>
-                            <?php if(isset($_SESSION["usuario"])): ?>
-                                <form action="../controller/CartController.php" method="get">
-                                    <input type="hidden" name="add_to_cart" value="<?php echo $service->id; ?>">
-                                    <button type="submit" class="btn-primary addToCart-btn">Add to cart</button>
-                                </form>
-                            <?php endif; ?>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            </div>
+            <?php endforeach;?>
         </div>
         <a href="newService.php">
             <button class="add-button">+</button>

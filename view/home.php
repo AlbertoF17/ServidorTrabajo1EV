@@ -52,9 +52,8 @@ session_start();
         <div class="shopName">
             <h1>HardwareHub</h1>
         </div>
-        
-        <div>
-            <p>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</p>
+        <div class="imageDiv">
+            <img src="../media/logo.png" alt="Logo" class="w-50"/>
         </div>
     </main>
 </body>
