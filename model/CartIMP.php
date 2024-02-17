@@ -1,7 +1,7 @@
 <?php
 require_once("../connection/connection.php");
-require_once("../model/Product.php");
-require_once("../model/Service.php");
+require_once("../model/SkillCourse.php");
+require_once("../model/BusinessService.php");
 require_once("../model/User.php");
 require_once("../model/Address.php");
 session_start();

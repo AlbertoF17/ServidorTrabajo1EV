@@ -1,11 +1,11 @@
 <?php
 require_once("../connection/connection.php");
-require_once("../model/ProductIMP.php");
-require_once("../model/Product.php");
+require_once("../model/SkillCourse.php");
+require_once("../model/SkillCourseIMP.php");
 
 if (isset($_GET["product_id"])) {
     $productId = $_GET["product_id"];
-    $specificProduct = selectProductByID($pdo, $productId);
+    $specificProduct = selectSkillCourseByID($pdo, $productId);
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -28,11 +28,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         } elseif ($action === 'delete_product') {
             // Llamar a la función de borrado
-            deleteProductByID($pdo, $productId);
+            deleteSkillCourseByID($pdo, $productId);
         }
 
         // Redirigir a la página de productos después de editar o borrar
-        header("Location: ../view/products.php");
+        header("Location: ../view/skill_courses.php");
         exit();
     } catch (PDOException $e) {
         $pdo->rollBack();

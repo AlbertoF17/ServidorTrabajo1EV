@@ -2,11 +2,11 @@
 require_once(__DIR__."/../connection/connection.php");
 require_once(__DIR__."/../model/User.php");
 require_once(__DIR__."/../model/Address.php");
-require_once(__DIR__."/../model/Service.php");
-require_once(__DIR__."/../model/Product.php");
-require_once(__DIR__."/../model/ServiceIMP.php");
-require_once(__DIR__."/../model/ProductIMP.php");
-require_once(__DIR__."/../controller/ServicesController.php");
+require_once(__DIR__."/../model/BusinessService.php");
+require_once(__DIR__."/../model/SkillCourse.php");
+require_once(__DIR__."/../model/BusinessServiceIMP.php");
+require_once(__DIR__."/../model/SkillCourseIMP.php");
+require_once(__DIR__."/../controller/BusinessServicesController.php");
 session_start();
 
 ?>
@@ -30,8 +30,8 @@ session_start();
         </div>
         <ul class="sidenav retract">
             <li><a href="#">Home</a></li>
-            <li><a href="../view/products.php">Products</a></li>
-            <li><a href="../view/services.php">Services</a></li>
+            <li><a href="../view/skill_courses.php">Skill Courses</a></li>
+            <li><a href="../view/business_services.php">Business Services</a></li>
             <li><a href="../view/aboutUs.php">About Us</a></li>
         </ul>
         <?php if(isset($_SESSION["user"])) : ?>

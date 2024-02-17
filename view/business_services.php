@@ -1,6 +1,6 @@
 <?php
 require_once(__DIR__."/../connection/connection.php");
-require_once(__DIR__."/../controller/ServicesController.php");
+require_once(__DIR__."/../controller/BusinessServicesController.php");
 session_start();
 ?>
 <!DOCTYPE html>
@@ -22,9 +22,9 @@ session_start();
             <span></span>
         </div>
         <ul class="sidenav retract">
-            <li><a href="../view/home.php">Home</a></li>
-            <li><a href="../view/products.php">Products</a></li>
-            <li><a href="#">Services</a></li>
+        <li><a href="../view/home.php">Home</a></li>
+            <li><a href="../view/skill_courses.php">Skill Courses</a></li>
+            <li><a href="#">Business Services</a></li>
             <li><a href="../view/aboutUs.php">About Us</a></li>
         </ul>
         <?php if(isset($_SESSION["user"])) : ?>
@@ -88,12 +88,10 @@ session_start();
             <form method="get">
                 <select id="categoryFilter" name="categoryFilter">
                     <option value="all" <?php echo ($categoryFilter === 'all') ? 'selected' : ''; ?>>All Categories</option>
-                    <option value="webDesign" <?php echo ($categoryFilter === 'webDesign') ? 'selected' : ''; ?>>Design a website</option>
-                    <option value="upgradePerformance" <?php echo ($categoryFilter === 'upgradePerformance') ? 'selected' : ''; ?>>Check and upgrade PC's preformance</option>
-                    <option value="drivers" <?php echo ($categoryFilter === 'drivers') ? 'selected' : ''; ?>>Install drivers and programs</option>
-                    <option value="repair" <?php echo ($categoryFilter === 'repair') ? 'selected' : ''; ?>>PC repair</option>
-                    <option value="bugFix" <?php echo ($categoryFilter === 'bugFix') ? 'selected' : ''; ?>>Bug fixes</option>
-                    <option value="webMaintenance" <?php echo ($categoryFilter === 'webMaintenance') ? 'selected' : ''; ?>>Website maintenance</option>
+                    <option value="database" <?php echo ($categoryFilter === 'database') ? 'selected' : ''; ?>>Database</option>
+                    <option value="web" <?php echo ($categoryFilter === 'web') ? 'selected' : ''; ?>>Web</option>
+                    <option value="service" <?php echo ($categoryFilter === 'service') ? 'selected' : ''; ?>>Service</option>
+                    <option value="officeSuit" <?php echo ($categoryFilter === 'officeSuit') ? 'selected' : ''; ?>>Office Suit</option>
                 </select>
                 <select id="sortFilter" name="sortFilter">
                     <option value="name" <?php echo ($sortFilter === 'name') ? 'selected' : ''; ?>>Sort by Name</option>
@@ -127,7 +125,7 @@ session_start();
                 </div>
             <?php endforeach;?>
         </div>
-        <a href="newService.php">
+        <a href="newBusinessService.php">
             <button class="add-button">+</button>
         </a>
     </main>

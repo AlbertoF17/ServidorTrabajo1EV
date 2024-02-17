@@ -1,6 +1,6 @@
 <?php 
 
-class Product {
+class SkillCourse {
     protected $id;
     protected $type;
     protected $categoryId;
@@ -11,7 +11,7 @@ class Product {
 
     public function __construct($id, $type, $categoryId, $name, $price, $description, $image) {
         $this->id = $id;
-        $this->type = "product";
+        $this->type = "Skill Course";
         $this->categoryId = $categoryId;
         $this->name = $name;
         $this->price = $price;

@@ -21,8 +21,8 @@ session_start();
         </div>
         <ul class="sidenav retract">
             <li><a href="../view/home.php">Home</a></li>
-            <li><a href="../view/products.php">Products</a></li>
-            <li><a href="../view/services.php">Services</a></li>
+            <li><a href="../view/skill_courses.php">Skill Courses</a></li>
+            <li><a href="../view/business_services.php">Business Services</a></li>
             <li><a href="../view/aboutUs.php">About Us</a></li>
         </ul>
         <div>

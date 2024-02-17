@@ -1,11 +1,11 @@
 <?php
 require_once("../connection/connection.php");
-require_once("../model/ProductIMP.php");
-require_once("../model/Product.php");
+require_once("../model/SkillCourseIMP.php");
+require_once("../model/SkillCourse.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["id"])) {
     $productId = $_POST["id"];
-    $specificProduct = selectProductByID($pdo, $productId);
+    $specificProduct = selectSkillCourseByID($pdo, $productId);
 
     try {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["id"])) {
         try {
             $pdo->beginTransaction();
     
-            $query = "UPDATE products SET categoryId = (?), name = (?), price = (?), description = (?), image = (?) WHERE id = (?)";
+            $query = "UPDATE skill_courses SET categoryId = (?), name = (?), price = (?), description = (?), image = (?) WHERE id = (?)";
             $step = $pdo->prepare($query);
             $step->bindParam(1, $categoryId, PDO::PARAM_INT);
             $step->bindParam(2, $name, PDO::PARAM_STR);
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["id"])) {
         }
 
         // Redirigir a la página de productos después de editar o borrar
-        header("Location: ../view/products.php");
+        header("Location: ../view/skill_courses.php");
         exit();
     } catch (PDOException $e) {
         $pdo->rollBack();

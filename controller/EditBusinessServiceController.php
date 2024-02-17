@@ -1,12 +1,12 @@
 <?php
 require_once("../connection/connection.php");
-require_once("../model/ServiceIMP.php");
-require_once("../model/Service.php");
+require_once("../model/BusinessServiceIMP.php");
+require_once("../model/BusinessService.php");
 
 // Verificar si se proporcionó un service_id en el formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["id"])) {
     $serviceId = $_POST["id"];
-    $specificService = selectServiceByID($pdo, $serviceId);
+    $specificService = selectBusinessServiceByID($pdo, $serviceId);
 
     try {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -30,8 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["id"])) {
         }
 
         // Redirigir a la página de servicios después de editar o borrar
-        require_once("../view/services.php");
-        header("Location: ../view/services.php");
+        require_once("../view/business_services.php");
+        header("Location: ../view/business_services.php");
         exit();
     } catch (PDOException $e) {
         $pdo->rollBack();

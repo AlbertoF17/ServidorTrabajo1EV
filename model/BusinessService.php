@@ -1,6 +1,6 @@
 <?php 
 
-class Service {
+class BusinessServices {
     protected $id;
     protected $type;
     protected $categoryId;
@@ -11,7 +11,7 @@ class Service {
 
     public function __construct($id, $type, $categoryId, $name, $price, $description, $image) {
         $this->id = $id;
-        $this->type = "service";
+        $this->type = "Business Services";
         $this->categoryId = $categoryId;
         $this->name = $name;
         $this->price = $price;

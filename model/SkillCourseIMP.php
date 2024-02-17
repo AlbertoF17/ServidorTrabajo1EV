@@ -1,7 +1,7 @@
 <?php
 require_once(__DIR__."/../connection/connection.php");
 
-function newProduct($pdo){
+function newSkillCourse($pdo){
     if(isset($_POST['categoryID']) && isset($_POST['name']) && isset($_POST['price']) && isset($_POST['description']) && isset($_FILES['image']['tmp_name'])) {
         $categoryId = $_POST['categoryID'];
         $name = $_POST['name'];
@@ -9,7 +9,7 @@ function newProduct($pdo){
         $description = $_POST['description'];
         $image = fopen($_FILES['image']['tmp_name'], 'rb');
 
-        $query = "INSERT INTO products (id, categoryId, name, price, description, image) VALUES (0, (?), (?), (?), (?), (?))";
+        $query = "INSERT INTO skill_courses (id, categoryId, name, price, description, image) VALUES (0, (?), (?), (?), (?), (?))";
         $step = $pdo->prepare($query);
         $step->bindParam(1, $categoryId, PDO::PARAM_INT);
         $step->bindParam(2, $name, PDO::PARAM_STR);
@@ -19,7 +19,7 @@ function newProduct($pdo){
 
         if ($step->execute()) {
             echo "Data with Photo is added";
-            header("Location: ../view/products.php");
+            header("Location: ../view/skill_courses.php");
         } else {
             echo "Not able to add data, please contact Admin";
             print_r($step->errorInfo()); 
@@ -27,32 +27,32 @@ function newProduct($pdo){
     }
 }
 
-function selectAllProducts($pdo, $sortFilter, $orderFilter) {
-    $query = "SELECT * FROM products ORDER BY $sortFilter $orderFilter";
-    return fetchProducts($pdo, $query);
+function selectAllSkillCourses($pdo, $sortFilter, $orderFilter) {
+    $query = "SELECT * FROM skill_courses ORDER BY $sortFilter $orderFilter";
+    return fetchSkillCourses($pdo, $query);
 }
 
-function selectProductsByCategory($pdo, $category, $sortFilter, $orderFilter) {
-    $query = "SELECT * FROM products WHERE categoryId = (?) ORDER BY $sortFilter $orderFilter";
-    return fetchProducts($pdo, $query, [$category]);
+function selectSkillCoursesByCategory($pdo, $category, $sortFilter, $orderFilter) {
+    $query = "SELECT * FROM skill_courses WHERE categoryId = (?) ORDER BY $sortFilter $orderFilter";
+    return fetchskill_courses($pdo, $query, [$category]);
 }
 
-function fetchProducts($pdo, $query, $params = []) {
+function fetchSkillCourses($pdo, $query, $params = []) {
     $results = [];
     $step = $pdo->prepare($query);
     $step->execute($params);
 
     foreach ($step->fetchAll() as $p) {
-        $product = new Product($p["id"], "product", $p["categoryId"], $p["name"], $p["price"], $p["description"], $p["image"]);
+        $product = new SkillCourse($p["id"], "product", $p["categoryId"], $p["name"], $p["price"], $p["description"], $p["image"]);
         array_push($results, $product);
     }
 
     return $results;
 }
 
-function selectProductByID($pdo, $productId) {
+function selectSkillCourseByID($pdo, $productId) {
     $result = [];
-    $query = "SELECT * FROM products WHERE id = (?)";
+    $query = "SELECT * FROM skill_courses WHERE id = (?)";
     $step = $pdo->prepare($query);
     $step->execute([$productId]);
 
@@ -61,17 +61,17 @@ function selectProductByID($pdo, $productId) {
 
     if ($row) {
         // Crea un objeto Product con los valores de la fila
-        $product = new Product($row["id"], "product", $row["categoryId"], $row["name"], $row["price"], $row["description"], $row["image"]);
+        $product = new SkillCourse($row["id"], "product", $row["categoryId"], $row["name"], $row["price"], $row["description"], $row["image"]);
     }
     return $product;
 }
 
-function deleteProductByID($pdo, $productId) {
+function deleteSkillCourseByID($pdo, $productId) {
     try {
         $pdo->beginTransaction();
 
         // Eliminar el producto
-        $query = "DELETE FROM products WHERE id = (?)";
+        $query = "DELETE FROM skill_courses WHERE id = (?)";
         $step = $pdo->prepare($query);
         $step->execute([$productId]);
 
@@ -85,7 +85,7 @@ function deleteProductByID($pdo, $productId) {
     }
 }
 
-function updateProductByID($pdo, $productId) {
+function updateSkillCourseByID($pdo, $productId) {
     
 }
 

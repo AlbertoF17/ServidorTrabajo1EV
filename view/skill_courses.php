@@ -1,6 +1,6 @@
 <?php
 require_once("../connection/connection.php");
-require_once("../controller/ProductsController.php");
+require_once("../controller/SkillCoursesController.php");
 session_start();
 ?>
 <!DOCTYPE html>
@@ -22,10 +22,11 @@ session_start();
         <span></span>
     </div>
     <ul class="sidenav retract">
+    <li>
     <li><a href="../view/home.php">Home</a></li>
-            <li><a href="#">Products</a></li>
-            <li><a href="../view/services.php">Services</a></li>
-            <li><a href="../view/aboutUs.php">About Us</a></li>
+        <li><a href="#">Skill Courses</a></li>
+        <li><a href="../view/business_services.php">Business Services</a></li>
+        <li><a href="../view/aboutUs.php">About Us</a></li>
     </ul>
     <?php if(isset($_SESSION["user"])) : ?>
         <div class="dropdown d-flex justify-content-end">
@@ -88,9 +89,10 @@ session_start();
         <form method="get">
             <select id="categoryFilter" name="categoryFilter">
                 <option value="all" <?php echo ($categoryFilter === 'all') ? 'selected' : ''; ?>>All Categories</option>
-                <option value="components" <?php echo ($categoryFilter === 'components') ? 'selected' : ''; ?>>Components</option>
-                <option value="peripherals" <?php echo ($categoryFilter === 'peripherals') ? 'selected' : ''; ?>>Peripherals</option>
-                <option value="keys" <?php echo ($categoryFilter === 'keys') ? 'selected' : ''; ?>>Keys</option>
+                <option value="database" <?php echo ($categoryFilter === 'database') ? 'selected' : ''; ?>>Database</option>
+                <option value="cybersecurity" <?php echo ($categoryFilter === 'cybersecurity') ? 'selected' : ''; ?>>Cybersecurity</option>
+                <option value="business" <?php echo ($categoryFilter === 'business') ? 'selected' : ''; ?>>Business</option>
+                <option value="marketing" <?php echo ($categoryFilter === 'marketing') ? 'selected' : ''; ?>>Marketing</option>
             </select>
             <select id="sortFilter" name="sortFilter">
                 <option value="name" <?php echo ($sortFilter === 'name') ? 'selected' : ''; ?>>Sort by Name</option>
@@ -120,11 +122,11 @@ session_start();
                         <button type="submit" class="btn-primary addToCart-btn">Add to cart</button>
                     </form>
                 <?php endif; ?>
-                <a href="../view/product.php?product_id=<?php echo $product->id; ?>" class="btn-primary">View Product</a>
+                <a href="../view/skill_course.php?product_id=<?php echo $product->id; ?>" class="btn-primary">View Product</a>
             </div>
         <?php endforeach; ?>
     </div>
-    <a href="newProduct.php">
+    <a href="newSkillCourse.php">
         <button class="add-button">+</button>
     </a>
 </main>

@@ -1,7 +1,8 @@
 <?php
 require_once("../connection/connection.php");
-require_once("../controller/ProductsController.php");
+require_once("../controller/SkillCourseController.php");
 session_start();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,8 +24,8 @@ session_start();
         </div>
         <ul class="sidenav retract">
             <li><a href="../view/home.php">Home</a></li>
-            <li><a href="../view/products.php">Products</a></li>
-            <li><a href="../view/services.php">Services</a></li>
+            <li><a href="../view/skill_courses.php">Skill Courses</a></li>
+            <li><a href="../view/business_services.php">Business Services</a></li>
             <li><a href="../view/aboutUs.php">About Us</a></li>
         </ul>
         <?php if(isset($_SESSION["user"])) : ?>
@@ -41,30 +42,27 @@ session_start();
             <a href="../view/login.php" class="btn btn-primary corner-btn">Log In / Sign In</a>
         <?php endif;?>
     </header>
-    <main class="retract">
-        <h1>New Product</h1>
-        <form action='../controller/ProductsController.php' method='post' enctype='multipart/form-data' class="m-4">
-            <div class="mb-3 d-flex flex-column align-items-center">
-                <label for="categoryID" class="form-label">Category ID:</label>
-                <input type="number" class="form-control w-50 ms-25" id="categoryID" name="categoryID" required>
-            </div>
-            <div class="mb-3 d-flex flex-column align-items-center">
-                <label for="name" class="form-label">Name:</label>
-                <input type="text" class="form-control w-50 ms-25" id="name" name="name" required>
-            </div>
-            <div class="mb-3 d-flex flex-column align-items-center">
-                <label for="price" class="form-label">Price:</label>
-                <input type="number" class="form-control w-50 ms-25" id="price" name="price" step="0.01" required>
-            </div>
-            <div class="mb-3 d-flex flex-column align-items-center">
-                <label for="description" class="form-label">Description:</label>
-                <input type="text" class="form-control w-50 ms-25" id="description" name="description" required>
-            </div>
-            <div class="mb-3 d-flex flex-column align-items-center">
-                <label for="image" class="form-label">Upload Image:</label>
-                <input type="file" class="form-control w-50 ms-25" id="image" name="image" required>
-            </div>
-            <button type="submit" class="btn btn-primary px-5">Submit</button>
+    <main class="retract d-flex flex-column align-items-center">
+        <h2>Edit Product</h2>
+        <form action="../controller/EditProductController.php" method="post" class="d-flex flex-column w-50 gap-2">
+            <input type="hidden" name="id" value="<?php echo $specificProduct->id; ?>">
+
+            <label for="categoryId">Category:</label>
+            <input type="text" id="categoryId" name="categoryId" value="<?php echo $specificProduct->categoryId; ?>" required>
+
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="<?php echo $specificProduct->name; ?>" required>
+
+            <label for="price">Price:</label>
+            <input type="number" step="0.01" id="price" name="price" value="<?php echo $specificProduct->price; ?>" required>
+
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required><?php echo $specificProduct->description; ?></textarea>
+
+            <label for="image">Image:</label>
+            <input type="file" id="image" name="image" accept="image/*">
+
+            <button class="btn btn-outline-primary" type="submit">Guardar cambios</button>
         </form>
     </main>
 </body>

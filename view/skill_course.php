@@ -1,7 +1,7 @@
 <?php
 require_once(__DIR__."/../connection/connection.php");
-require_once(__DIR__."/../controller/ProductController.php");
-require_once(__DIR__."/../model/Product.php");
+require_once(__DIR__."/../controller/SkillCourseController.php");
+require_once(__DIR__."/../model/SkillCourse.php");
 session_start();
 
 // Verificar si se proporciona un product_id en la URL
@@ -9,7 +9,7 @@ if (isset($_GET['product_id'])) {
     $productId = $_GET['product_id'];
     
     // Cargar el producto desde la base de datos
-    $specificProduct = selectProductByID($pdo, $productId);
+    $specificProduct = selectSkillCourseByID($pdo, $productId);
 
     // Verificar si se pudo cargar el producto
     if ($specificProduct) {
@@ -126,10 +126,10 @@ if (isset($_GET['product_id'])) {
                 <p><?= $productDescription ?></p>
                 <p class="fw-bold"><?= $productPrice ?> €</p>
                 <div class="d-flex gap-2 justify-content-center align-items-center">
-                    <a href="../view/editProduct.php?product_id=<?= $specificProduct->id; ?>" class="btn btn-outline-primary">Edit Product</a>
-                    <form action="../controller/ProductController.php" method="post">
+                    <a href="../view/editSkillCourse.php?product_id=<?= $specificProduct->id; ?>" class="btn btn-outline-primary">Edit Skill Course</a>
+                    <form action="../controller/SkillCourseController.php" method="post">
                         <input type="hidden" name="product_id" value="<?php echo $specificProduct->id; ?>">
-                        <button type="submit" name="action" value="delete_product" class="btn btn-outline-danger">Delete Product</button>
+                        <button type="submit" name="action" value="delete_product" class="btn btn-outline-danger">Delete Skil Course</button>
                     </form>
                 </div>
             </div>
