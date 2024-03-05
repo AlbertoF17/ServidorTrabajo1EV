@@ -100,7 +100,7 @@ session_start();
                 <p class="fw-bold"><?= $servicePrice ?> €</p>
                 <div class="d-flex gap-2 justify-content-center align-items-center">
                     <a href="../view/editService.php?service_id=<?= $serviceId; ?>" class="btn btn-outline-primary">Edit Service</a>
-                    <form action="../controller/EditServiceController.php" method="post">
+                    <form action="../controller/EditBusinessServiceController.php" method="post">
                         <input type="hidden" name="service_id" value="<?php echo $specificService->id; ?>">
                         <button type="submit" name="delete_service" class="btn btn-outline-danger">Delete Service</button>
                     </form>

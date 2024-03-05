@@ -20,7 +20,7 @@ function newBusinessService($pdo){
 
         if ($step->execute()) {
             echo "Data with Photo is added";
-            header("Location: ../view/services.php");
+            header("Location: ../view/business_services.php");
         } else {
             echo "Not able to add data, please contact Admin";
             print_r($step->errorInfo()); 
@@ -44,7 +44,7 @@ function fetchBusinessServices($pdo, $query, $params = []) {
     $step->execute($params);
 
     foreach ($step->fetchAll() as $s) {
-        $service = new BusinessService($s["id"], "service", $s["categoryId"], $s["name"], $s["price"], $s["description"], $s["image"]);
+        $service = new BusinessServices($s["id"], "service", $s["categoryId"], $s["name"], $s["price"], $s["description"], $s["image"]);
         array_push($results, $service);
     }
 
@@ -61,7 +61,7 @@ function selectBusinessServiceByID($pdo, $serviceId) {
     $row = $step->fetch(PDO::FETCH_ASSOC);
 
     if ($row) {
-        $service = new Service($row["id"], "service", $row["categoryId"], $row["name"], $row["price"], $row["description"], $row["image"]);
+        $service = new BusinessServices($row["id"], "service", $row["categoryId"], $row["name"], $row["price"], $row["description"], $row["image"]);
     }
     return $service;
 }

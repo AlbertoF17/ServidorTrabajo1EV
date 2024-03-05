@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($action === 'edit_product') {
             // Redirigir a la página de edición con el ID del producto
-            header("Location: ../view/editProduct.php?product_id={$_GET["product_id"]}");
+            header("Location: ../view/editSkillCourse.php?product_id={$_GET["product_id"]}");
             exit();
         } elseif ($action === 'delete_product') {
             // Llamar a la función de borrado
