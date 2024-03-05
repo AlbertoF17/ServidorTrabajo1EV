@@ -47,10 +47,11 @@ require_once(__DIR__."/../controller/AboutUsController.php");
         </div>
         <div>
             <p class="mx-2 px-4">
-                Welcome to HardwareHub! We're a new tech company with a simple goal: to make your tech life awesome.
-                We sell computer stuff online, from components to cool peripherals.
-                Our team is a bunch of tech experts who are here to help you with anything tech-related, whether you're building a computer or need tech services,
-                we've got your back. Our mission is to make tech easy and fun for you.</p>
+            Welcome to HardwareHub! Your gateway to learning the latest in technology and improving your digital career.
+            Offering many skill courses and business services, we're dedicated to teach people like you, with the objetive
+            of helping you shine in the world of tech. Our expert team is will provides you comprehensive support every step
+            of the way. Join us and make learning accessible and enjoyable!!!
+            </p>
         </div>
         <div class="d-flex flex-wrap justify-content-center align-items-stretch p-3 gap-4">
             <?php foreach($employees as $employee): ?>
